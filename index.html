@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Ju'un K'in — The Classic Maya Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --limestone:#FFFFFF;
+  --limestone-dim:#F1F1F1;
+  --limestone-line: rgba(0,0,0,0.18);
+  --obsidian:#000000;
+  --obsidian-soft:#111111;
+  --jade:#166341;
+  --jade-deep:#0E4A30;
+  --cinnabar:#A3200A;
+  --mayablue:#0B5C73;
+  --ochre:#8A5A00;
+  --ink:#000000;
+  --muted:#333333;
+  --muted-soft:#4D4D4D;
+  --paper-shadow: none;
+  --serif:'Spectral', Georgia, serif;
+  --serif-sc:'Spectral SC', 'Spectral', serif;
+  --sans:'Source Sans 3', system-ui, sans-serif;
+  --mono:'JetBrains Mono', monospace;
+  --r: 3px;
+  color-scheme: light;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth; background:var(--limestone); color:var(--ink);}
+body{
+  background:var(--limestone);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:background .4s ease, color .4s ease;
+  padding-bottom:60px;
+}
+::selection{ background:var(--ochre); color:var(--obsidian); }
+
+/* texture */
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  opacity:.05;
+  background-image: radial-gradient(circle at 1px 1px, var(--ink) 1px, transparent 0);
+  background-size: 14px 14px;
+}
+
+a{color:inherit;}
+button{font-family:inherit;}
+
+.wrap{ max-width:920px; margin:0 auto; padding:0 18px; position:relative; z-index:1;}
+
+/* ---------- TOP BAR ---------- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 18px; max-width:920px; margin:0 auto;
+  border-bottom:1px solid var(--limestone-line);
+  position:relative; z-index:2;
+}
+.brand{ display:flex; flex-direction:column; gap:1px;}
+.brand .glyph-mark{
+  font-family:var(--serif-sc); font-size:20px; letter-spacing:.06em; font-weight:600;
+}
+.brand .sub{ font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted-soft);}
+.topctrls{ display:flex; gap:8px; align-items:center;}
+.iconbtn{
+  border:1px solid var(--limestone-line); background:transparent; color:var(--ink);
+  width:36px; height:36px; border-radius:var(--r); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+  transition:.2s;
+}
+.iconbtn:hover{ background:var(--limestone-dim); }
+.iconbtn:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, .daychip:focus-visible{
+  outline:2px solid var(--ochre); outline-offset:2px;
+}
+
+/* ---------- SECTION LABELS ---------- */
+.eyebrow{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--jade); display:flex; align-items:center; gap:8px; margin-bottom:10px;
+}
+
+.eyebrow::before{ content:""; width:16px; height:1px; background:currentColor; display:inline-block;}
+h2.title{
+  font-family:var(--serif); font-weight:600; font-size:22px; margin-bottom:4px;
+}
+.section{ padding:44px 0; border-bottom:1px solid var(--limestone-line); }
+.section p.lede{ max-width:60ch; color:var(--muted); font-size:14.5px; margin-bottom:22px;}
+
+/* ---------- HERO / TODAY PANEL ---------- */
+.hero{ padding:34px 0 40px; }
+.today-card{
+  border:1px solid var(--limestone-line);
+  border-radius:6px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0)) , var(--limestone-dim);
+  box-shadow:var(--paper-shadow);
+  padding:22px 20px 20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.today-card::after{
+  content:""; position:absolute; left:0; right:0; top:0; height:3px;
+  background:repeating-linear-gradient(90deg, var(--cinnabar) 0 14px, var(--ochre) 14px 28px, var(--jade) 28px 42px, var(--mayablue) 42px 56px);
+  opacity:.8;
+}
+.lc-display{
+  font-family:var(--mono); font-size:clamp(26px,7vw,40px); letter-spacing:.02em; font-weight:500;
+  margin:10px 0 2px;
+}
+.lc-display span{ color:var(--muted-soft); font-size:.7em; padding:0 2px;}
+.gregorian-line{ font-size:13.5px; color:var(--muted); margin-bottom:18px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center;}
+.tz-select{
+  font-family:var(--mono); font-size:11.5px; background:transparent; border:1px solid var(--limestone-line);
+  border-radius:var(--r); padding:4px 6px; color:var(--ink);
+}
+.stat-grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+  background:var(--limestone-line); border:1px solid var(--limestone-line); border-radius:5px; overflow:hidden;
+}
+@media(min-width:640px){ .stat-grid{ grid-template-columns:repeat(4,1fr);} }
+.stat{
+  background:var(--limestone); padding:12px 12px 13px;
+}
+
+.stat .k{ font-size:9.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-soft); margin-bottom:5px;}
+.stat .v{ font-family:var(--serif); font-size:18px; font-weight:600;}
+.stat .v small{ font-family:var(--sans); font-size:11px; font-weight:400; color:var(--muted-soft); display:block; margin-top:2px;}
+
+/* ---------- RING VISUALIZATION ---------- */
+.ring-stage{
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+.ring-svg-holder{ width:100%; max-width:420px; aspect-ratio:1/1; position:relative; margin:0 auto;}
+svg.rings{ width:100%; height:100%; overflow:visible; }
+.ring-seg{ cursor:pointer; transition:opacity .15s; }
+.ring-seg:hover, .ring-seg.active{ filter:brightness(1.15); }
+.ring-center-label{
+  font-family:var(--serif-sc); font-size:11px; text-anchor:middle; fill:var(--ink); letter-spacing:.04em;
+}
+.ring-legend{
+  display:flex; flex-wrap:wrap; gap:8px 14px; justify-content:center; font-size:11px; color:var(--muted);
+}
+.ring-legend .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:middle;}
+
+.scale-row{
+  display:flex; gap:6px; overflow-x:auto; padding:14px 0 4px; -ms-overflow-style:none; scrollbar-width:none;
+}
+.scale-row::-webkit-scrollbar{ display:none; }
+.scale-chip{
+  flex:0 0 auto; font-family:var(--mono); font-size:11px; padding:6px 11px; border-radius:20px;
+  border:1px solid var(--limestone-line); background:transparent; color:var(--ink); cursor:pointer; white-space:nowrap;
+}
+.scale-chip.active{ background:var(--jade); border-color:var(--jade); color:#F4F1E4; }
+.scale-note{ font-size:12.5px; color:var(--muted); text-align:center; min-height:18px; }
+
+/* ---------- DATE EXPLORER ---------- */
+.explorer-grid{ display:grid; gap:14px; }
+@media(min-width:640px){ .explorer-grid{ grid-template-columns:1fr 1fr; } }
+.field-card{
+  border:1px solid var(--limestone-line); border-radius:5px; padding:16px; background:var(--limestone-dim);
+}
+.field-card label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-soft); display:block; margin-bottom:6px;}
+.field-row{ display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;}
+input[type=date], input[type=text], input[type=number]{
+  font-family:var(--mono); font-size:13.5px; padding:8px 9px; border:1px solid var(--limestone-line);
+  border-radius:var(--r); background:var(--limestone); color:var(--ink); flex:1; min-width:0;
+}
+.btn{
+  font-family:var(--sans); font-size:12.5px; font-weight:600; letter-spacing:.02em;
+  padding:8px 14px; border-radius:var(--r); border:1px solid var(--ink); background:var(--ink); color:var(--limestone);
+  cursor:pointer; transition:.15s;
+}
+.btn:hover{ opacity:.85; }
+.btn.ghost{ background:transparent; color:var(--ink); border-color:var(--limestone-line); }
+.result-line{ font-family:var(--mono); font-size:12.5px; color:var(--muted); padding-top:8px; border-top:1px dashed var(--limestone-line); margin-top:8px;}
+.result-line b{ font-family:var(--sans); font-weight:600; color:var(--muted-soft); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:3px;}
+
+/* ---------- SYMBOL EXPLORER ---------- */
+.filter-row{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px; }
+.filter-chip{
+  font-family:var(--mono); font-size:10.5px; padding:5px 10px; border-radius:20px;
+  border:1px solid var(--limestone-line); background:transparent; color:var(--muted); cursor:pointer;
+}
+.filter-chip.on{ opacity:1; background:var(--limestone-dim); border-color:var(--ink); }
+.filter-chip.modern{ border-style:dashed; }
+
+.sign-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(74px,1fr)); gap:8px;
+}
+.daychip{
+  aspect-ratio:1/1; border:1px solid var(--limestone-line); border-radius:5px; background:var(--limestone-dim);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; gap:4px;
+  transition:.15s;
+}
+.daychip:hover{ border-color:var(--ink); }
+.daychip .g{ width:26px; height:26px; }
+.daychip .n{ font-size:9.5px; font-family:var(--sans); font-weight:600; text-align:center; line-height:1.1; padding:0 2px;}
+
+.detail-panel{
+  margin-top:16px; border:1px solid var(--limestone-line); border-radius:6px; padding:18px;
+  background:var(--limestone-dim); display:none;
+}
+.detail-panel.show{ display:block; }
+.detail-head{ display:flex; gap:14px; align-items:center; margin-bottom:12px; }
+.detail-head .g-big{ width:56px; height:56px; flex:0 0 auto; }
+.detail-head h3{ font-family:var(--serif); font-size:19px; font-weight:600;}
+.detail-head .m{ font-size:12px; color:var(--muted); font-style:italic;}
+.tagline{ display:flex; gap:8px; margin-bottom:6px; }
+.tag{
+  font-family:var(--mono); font-size:9px; text-transform:uppercase; letter-spacing:.05em;
+  padding:2px 6px; border-radius:3px; flex:0 0 auto; height:fit-content; margin-top:2px;
+}
+.tag.primary{ background:var(--jade); color:#fff; }
+.tag.colonial{ background:var(--ochre); color:#241a05; }
+.tag.reconstruction{ background:var(--mayablue); color:#fff; }
+.tag.speculative{ background:transparent; border:1px dashed var(--cinnabar); color:var(--cinnabar); }
+.tag.modern{ background:transparent; border:1px dashed currentColor; opacity:.7; }
+.note-row{ display:flex; gap:8px; font-size:13px; margin-bottom:9px; align-items:flex-start; }
+.note-row p{ color:var(--muted); }
+
+/* ---------- LONG COUNT UNITS ---------- */
+.units-table{ width:100%; border-collapse:collapse; font-size:13px; }
+.units-table th{ text-align:left; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted-soft); padding:6px 8px; border-bottom:1px solid var(--limestone-line);}
+.units-table td{ padding:7px 8px; border-bottom:1px solid var(--limestone-line); font-family:var(--mono); }
+.units-table td.name{ font-family:var(--sans); font-weight:600;}
+.units-table tr.highlight td{ background:var(--limestone-dim); }
+
+/* ---------- COSMOLOGY STRIP ---------- */
+.dir-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; text-align:center; }
+.dir-cell{ border:1px solid var(--limestone-line); border-radius:5px; padding:10px 4px; background:var(--limestone-dim); }
+.dir-cell .sw{ width:100%; height:8px; border-radius:2px; margin-bottom:8px; }
+.dir-cell .lab{ font-size:10.5px; font-weight:600; }
+.dir-cell .sub{ font-size:9.5px; color:var(--muted-soft); }
+
+/* ---------- SCOPE NOTE / FOOTER ---------- */
+.scope-note{
+  font-size:12.5px; color:var(--muted); border-left:2px solid var(--cinnabar); padding:10px 14px; margin-top:10px;
+  background:var(--limestone-dim);
+}
+footer{ padding:36px 18px 10px; text-align:center; font-size:11px; color:var(--muted-soft); font-family:var(--mono); }
+
+/* Hard safety net: force readable black-on-white regardless of any
+   OS/webview auto-dark filtering, forced-colors mode, or inherited state. */
+html, body{ background:#FFFFFF !important; color:#000000 !important; }
+.today-card, .field-card, .stat, .detail-panel, .daychip, .dir-cell{ background:#FFFFFF !important; }
+.stat, .units-table tr.highlight td{ background:#F1F1F1 !important; }
+p, span, div, li, td, th, label, small, b, h1, h2, h3, h4{ color:#000000; }
+.brand .sub, .stat .k, .stat .v small, .field-card label, .result-line b,
+.units-table th, .dir-cell .sub, footer, .scale-note{ color:#4D4D4D !important; }
+.section p.lede, .gregorian-line, .result-line, .detail-head .m, .note-row p,
+.scope-note, .ring-legend{ color:#333333 !important; }
+input, select{ background:#FFFFFF !important; color:#000000 !important; }
+
+</style>
+</head>
+<body data-mode="light">
+
+<div class="topbar">
+  <div class="brand">
+    <span class="glyph-mark">Ju'un K'in</span>
+    <span class="sub">A Classic Maya Calendar Reference</span>
+  </div>
+  <div class="topctrls"></div>
+</div>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Today's reading</div>
+    <div class="today-card">
+      <div class="lc-display" id="lcDisplay">—</div>
+      <div class="gregorian-line">
+        <span id="gregLine">—</span>
+        <select class="tz-select" id="tzSelect"></select>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><div class="k">Tzolk'in</div><div class="v" id="statTzolkin">—</div></div>
+        <div class="stat"><div class="k">Haab'</div><div class="v" id="statHaab">—</div></div>
+        <div class="stat"><div class="k">Calendar Round</div><div class="v" id="statCR">—<small>full 52-tun cycle position</small></div></div>
+        <div class="stat"><div class="k">Lord of the Night</div><div class="v" id="statLord">—<small>G-series, reconstructed</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RINGS -->
+  <section class="section">
+    <div class="eyebrow">Cosmic wheel</div>
+    <h2 class="title">The Interlocking Cycles</h2>
+    <p class="lede">Two independent cycles — the 13 numbers and 20 named days of the Tzolk'in — mesh like gears to form a 260-day sacred count, distinct from the 365-day Haab' solar year. Tap a day sign to open its scholarly record below.</p>
+
+    <div class="ring-stage">
+      <div class="ring-svg-holder">
+        <svg class="rings" viewBox="0 0 400 400" id="ringSvg" role="img" aria-label="Interactive Tzolk'in and Haab wheel"></svg>
+      </div>
+      <div class="ring-legend" id="ringLegend"></div>
+    </div>
+
+    <div class="scale-row" id="scaleRow"></div>
+    <div class="scale-note" id="scaleNote"></div>
+  </section>
+
+  <!-- DATE EXPLORER -->
+  <section class="section">
+    <div class="eyebrow">Date explorer</div>
+    <h2 class="title">Convert Between Systems</h2>
+    <p class="lede">Enter a Gregorian date or a Long Count to see its equivalents across every Classic Maya reckoning, using the widely-adopted GMT (584283) correlation constant.</p>
+
+    <div class="explorer-grid">
+      <div class="field-card">
+        <label for="gregInput">Gregorian date</label>
+        <div class="field-row">
+          <input type="date" id="gregInput">
+          <button class="btn" id="convertGreg">Convert</button>
+        </div>
+        <div class="result-line" id="gregResult"><b>Result</b>—</div>
+      </div>
+      <div class="field-card">
+        <label for="lcInput">Long Count (baktun.katun.tun.uinal.kin)</label>
+        <div class="field-row">
+          <input type="text" id="lcInput" placeholder="13.0.13.14.7">
+          <button class="btn" id="convertLC">Convert</button>
+        </div>
+        <div class="result-line" id="lcResult"><b>Result</b>—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SYMBOL EXPLORER -->
+  <section class="section">
+    <div class="eyebrow">Symbol explorer</div>
+    <h2 class="title">The Twenty Day Signs</h2>
+    <p class="lede">Each entry is layered by evidentiary status. Toggle the filters to control which categories of claim are shown — Modern Interpretations are hidden by default, per the exhibit's editorial policy.</p>
+
+    <div class="filter-row" id="filterRow"></div>
+    <div class="sign-grid" id="signGrid"></div>
+    <div class="detail-panel" id="detailPanel"></div>
+  </section>
+
+  <!-- LONG COUNT UNITS -->
+  <section class="section">
+    <div class="eyebrow">Long Count explorer</div>
+    <h2 class="title">How the Cycles Nest</h2>
+    <p class="lede">The Long Count is a place-value, mostly base-20 (vigesimal) system — with one irregular step, since 18 uinals make a tun, so that a tun approximates a 360-day count rather than a full 400.</p>
+    <table class="units-table" id="unitsTable"></table>
+  </section>
+
+  <!-- COSMOLOGY -->
+  <section class="section">
+    <div class="eyebrow">Directional cosmology</div>
+    <h2 class="title">Four Directions, One Center</h2>
+    <p class="lede">Colonial and epigraphic sources associate the cardinal directions with specific colors, most explicitly in the Postclassic Dresden and Madrid Codices and in the colonial Books of Chilam Balam.</p>
+    <div class="dir-grid" id="dirGrid"></div>
+    <div class="scope-note">
+      <b>Editorial note —</b> this reference distinguishes primary epigraphic/iconographic attestation from colonial-era systematization (much of the tidy four-direction/four-color scheme as usually presented derives from colonial Yucatec sources like the Chilam Balam and from Landa, and its uniform application to the Classic period is a scholarly extrapolation, not a direct Classic-era statement).
+    </div>
+  </section>
+
+  <section class="section" style="border-bottom:none;">
+    <div class="eyebrow">Scope of this build</div>
+    <h2 class="title">What's Here, What's Next</h2>
+    <p class="lede" style="max-width:64ch;">
+      This build implements accurate Long Count / Tzolk'in / Haab' astronomical calculation, the interactive wheel, a bidirectional date converter, and a sourced symbol reference for all 20 day signs. The full brief also calls for codex page scans with glyph-by-glyph transliteration, a WebGL cosmological model, an epigraphy workbench, a Mesoamerican site map, offline PWA packaging, and a full-text search index — each is a substantial research-backed module in its own right. Tell me which to build next and I'll take it as far as this format allows.
+    </p>
+  </section>
+
+</main>
+
+<footer>Correlation constant: GMT 584283 · 0.0.0.0.0 = 11 August 3114 BCE (proleptic Gregorian) · Built as a reference exhibit, not a predictive or divinatory tool.</footer>
+
+<script>
+/* ============================================================
+   CALENDAR MATH
+   ============================================================ */
+const CORRELATION = 584283; // GMT constant: 13.0.0.0.0 = 21 Dec 2012
+
+function gregorianToJDN(y, m, d){
+  const a = Math.floor((14 - m) / 12);
+  const yy = y + 4800 - a;
+  const mm = m + 12 * a - 3;
+  return d + Math.floor((153*mm+2)/5) + 365*yy + Math.floor(yy/4) - Math.floor(yy/100) + Math.floor(yy/400) - 32045;
+}
+function jdnToGregorian(jdn){
+  let a = jdn + 32044;
+  let b = Math.floor((4*a+3)/146097);
+  let c = a - Math.floor((146097*b)/4);
+  let dd = Math.floor((4*c+3)/1461);
+  let e = c - Math.floor((1461*dd)/4);
+  let m = Math.floor((5*e+2)/153);
+  const day = e - Math.floor((153*m+2)/5) + 1;
+  const month = m + 3 - 12*Math.floor(m/10);
+  const year = 100*b + dd - 4800 + Math.floor(m/10);
+  return {y:year, m:month, d:day};
+}
+
+const DAY_SIGNS = ["Imix","Ik'","Ak'bal","K'an","Chikchan","Kimi","Manik'","Lamat","Muluk","Ok",
+                   "Chuwen","Eb'","Ben","Ix","Men","Kib'","Kaban","Etz'nab'","Kawak","Ajaw"];
+const HAAB_MONTHS = ["Pop","Wo'","Sip","Sotz'","Sek","Xul","Yaxk'in","Mol","Ch'en","Yax",
+                     "Sak'","Keh","Mak","K'ank'in","Muwan","Pax","K'ayab","Kumk'u"];
+const LORDS = ["G1","G2","G3","G4","G5","G6","G7","G8","G9"];
+
+function longCountFromTotal(total){
+  let rem = total;
+  const baktun = Math.floor(rem/144000); rem -= baktun*144000;
+  const katun = Math.floor(rem/7200); rem -= katun*7200;
+  const tun = Math.floor(rem/360); rem -= tun*360;
+  const uinal = Math.floor(rem/20); rem -= uinal*20;
+  const kin = rem;
+  return {baktun,katun,tun,uinal,kin};
+}
+function totalFromLongCount(b,ka,t,u,ki){
+  return b*144000 + ka*7200 + t*360 + u*20 + ki;
+}
+function tzolkinFromTotal(total){
+  const num = (((total + 3) % 13) + 13) % 13 + 1;
+  const signIdx = (((total + 19) % 20) + 20) % 20;
+  return {num, sign: DAY_SIGNS[signIdx]};
+}
+function haabFromTotal(total){
+  const doy = (((total + 348) % 365) + 365) % 365;
+  if (doy < 360){
+    const month = Math.floor(doy/20);
+    const day = doy - month*20;
+    return {day, month: HAAB_MONTHS[month]};
+  } else {
+    return {day: doy-360, month:"Wayeb'"};
+  }
+}
+function lordFromTotal(total){
+  // Reconstructed sequence; convention: 0.0.0.0.0 aligned to G9. Debated among specialists.
+  const idx = (((total + 8) % 9) + 9) % 9;
+  return LORDS[idx];
+}
+function calendarRoundPosition(total){
+  // Position within the 18,980-day (52 Haab') Calendar Round cycle
+  return (((total % 18980)+18980)%18980);
+}
+
+function fullReading(total){
+  const lc = longCountFromTotal(total);
+  const tz = tzolkinFromTotal(total);
+  const hb = haabFromTotal(total);
+  const lord = lordFromTotal(total);
+  const crPos = calendarRoundPosition(total);
+  return {lc, tz, hb, lord, crPos, total};
+}
+
+/* ============================================================
+   STATE / CLOCK
+   ============================================================ */
+const MONTH_NAMES_G = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function jdnForTimezoneNow(tz){
+  const now = new Date();
+  const fmt = new Intl.DateTimeFormat('en-CA', {timeZone: tz, year:'numeric', month:'2-digit', day:'2-digit'});
+  const parts = fmt.formatToParts(now).reduce((o,p)=>{o[p.type]=p.value; return o;},{});
+  return {jdn: gregorianToJDN(+parts.year, +parts.month, +parts.day), y:+parts.year, m:+parts.month, d:+parts.day};
+}
+
+function populateTZ(){
+  const sel = document.getElementById('tzSelect');
+  const zones = ["Pacific/Honolulu","America/Los_Angeles","America/Denver","America/Chicago","America/New_York",
+                 "America/Mexico_City","UTC","Europe/London","Europe/Berlin","Europe/Moscow","Asia/Kolkata","Asia/Tokyo","Australia/Sydney"];
+  let userTz = 'UTC';
+  try{ userTz = Intl.DateTimeFormat().resolvedOptions().timeZone; }catch(e){}
+  if (!zones.includes(userTz)) zones.unshift(userTz);
+  sel.innerHTML = zones.map(z=>`<option value="${z}" ${z===userTz?'selected':''}>${z.replace('_',' ')}</option>`).join('');
+  sel.addEventListener('change', renderToday);
+}
+
+function renderToday(){
+  const tz = document.getElementById('tzSelect').value;
+  const {jdn, y, m, d} = jdnForTimezoneNow(tz);
+  const total = jdn - CORRELATION;
+  const r = fullReading(total);
+
+  document.getElementById('lcDisplay').innerHTML =
+    `${r.lc.baktun}<span>.</span>${r.lc.katun}<span>.</span>${r.lc.tun}<span>.</span>${r.lc.uinal}<span>.</span>${r.lc.kin}`;
+  document.getElementById('gregLine').textContent = `${MONTH_NAMES_G[m-1]} ${d}, ${y} CE (proleptic Gregorian) · JDN ${jdn}`;
+  document.getElementById('statTzolkin').innerHTML = `${r.tz.num} ${r.tz.sign}`;
+  document.getElementById('statHaab').innerHTML = `${r.hb.day} ${r.hb.month}`;
+  document.getElementById('statCR').innerHTML = `${r.crPos.toLocaleString()}<small>of 18,980 days in cycle</small>`;
+  document.getElementById('statLord').innerHTML = `${r.lord}<small>G-series, reconstructed</small>`;
+
+  drawRings(r);
+  updateScaleNote(r);
+}
+
+/* ============================================================
+   RING VISUALIZATION
+   ============================================================ */
+const DIRECTIONS = [
+  {name:"East", color:"#AE4227", note:"associated with red"},
+  {name:"North", color:"#EDE7D6", note:"associated with white", border:true},
+  {name:"West", color:"#18140F", note:"associated with black"},
+  {name:"South", color:"#BD8A2E", note:"associated with yellow"},
+  {name:"Center", color:"#2E7A5C", note:"blue-green, the World Tree axis"}
+];
+
+function polar(cx,cy,r,angDeg){
+  const a = (angDeg-90) * Math.PI/180;
+  return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+}
+function arcPath(cx,cy,rInner,rOuter,a0,a1){
+  const [x0,y0] = polar(cx,cy,rOuter,a0);
+  const [x1,y1] = polar(cx,cy,rOuter,a1);
+  const [x2,y2] = polar(cx,cy,rInner,a1);
+  const [x3,y3] = polar(cx,cy,rInner,a0);
+  const large = (a1-a0) > 180 ? 1 : 0;
+  return `M${x0},${y0} A${rOuter},${rOuter} 0 ${large} 1 ${x1},${y1} L${x2},${y2} A${rInner},${rInner} 0 ${large} 0 ${x3},${y3} Z`;
+}
+
+function ringColor(i,n,scheme){
+  const palettes = {
+    jade:["#2E7A5C","#3C8F6C"], ochre:["#BD8A2E","#CD9E4C"], blue:["#276F82","#3C8A9E"], cinnab:["#AE4227","#C05A3D"]
+  };
+  const p = palettes[scheme];
+  return p[i%2];
+}
+
+let currentReading = null;
+function drawRings(r){
+  currentReading = r;
+  const svg = document.getElementById('ringSvg');
+  svg.innerHTML = "";
+  const cx=200, cy=200;
+  const ns = "http://www.w3.org/2000/svg";
+
+  // Ring radii
+  const rings = [
+    {rIn:150, rOut:185, n:18, scheme:'ochre', kind:'haab', labels: HAAB_MONTHS},
+    {rIn:112, rOut:146, n:20, scheme:'jade', kind:'sign', labels: DAY_SIGNS},
+    {rIn:78,  rOut:106, n:13, scheme:'blue', kind:'num', labels: Array.from({length:13},(_,i)=>i+1)},
+  ];
+
+  rings.forEach(ring=>{
+    const step = 360/ring.n;
+    for(let i=0;i<ring.n;i++){
+      const a0 = i*step, a1=(i+1)*step;
+      const path = document.createElementNS(ns,'path');
+      path.setAttribute('d', arcPath(cx,cy,ring.rIn,ring.rOut,a0,a1));
+      path.setAttribute('fill', ringColor(i,ring.n,ring.scheme));
+      path.setAttribute('stroke', 'var(--limestone)');
+      path.setAttribute('stroke-width','1.2');
+      path.setAttribute('class','ring-seg');
+      path.setAttribute('opacity','0.88');
+
+      // highlight current
+      let isCurrent=false;
+      if(ring.kind==='haab' && ring.labels[i]===r.hb.month) isCurrent=true;
+      if(ring.kind==='sign' && ring.labels[i]===r.tz.sign) isCurrent=true;
+      if(ring.kind==='num' && ring.labels[i]===r.tz.num) isCurrent=true;
+      if(isCurrent){ path.setAttribute('opacity','1'); path.setAttribute('stroke','var(--ink)'); path.setAttribute('stroke-width','2'); }
+
+      if(ring.kind==='sign'){
+        path.style.cursor='pointer';
+        path.addEventListener('click', ()=> openSignDetail(ring.labels[i]));
+        const title = document.createElementNS(ns,'title');
+        title.textContent = ring.labels[i];
+        path.appendChild(title);
+      } else {
+        const title = document.createElementNS(ns,'title');
+        title.textContent = String(ring.labels[i]);
+        path.appendChild(title);
+      }
+      svg.appendChild(path);
+    }
+  });
+
+  // center direction pentagon-ish core
+  const core = document.createElementNS(ns,'circle');
+  core.setAttribute('cx',cx); core.setAttribute('cy',cy); core.setAttribute('r',62);
+  core.setAttribute('fill','#2E7A5C'); core.setAttribute('stroke','var(--ink)'); core.setAttribute('stroke-width','1.5');
+  svg.appendChild(core);
+  const label1 = document.createElementNS(ns,'text');
+  label1.setAttribute('x',cx); label1.setAttribute('y',cy-4); label1.setAttribute('class','ring-center-label');
+  label1.setAttribute('fill', '#EDE7D6');
+  label1.textContent = r.tz.num+" "+r.tz.sign;
+  svg.appendChild(label1);
+  const label2 = document.createElementNS(ns,'text');
+  label2.setAttribute('x',cx); label2.setAttribute('y',cy+13); label2.setAttribute('class','ring-center-label');
+  label2.setAttribute('fill', '#EDE7D6'); label2.setAttribute('font-size','9');
+  label2.textContent = r.hb.day+" "+r.hb.month;
+  svg.appendChild(label2);
+
+  document.getElementById('ringLegend').innerHTML = `
+    <span><span class="dot" style="background:#BD8A2E"></span>Haab' months (outer, 18 shown; Wayeb' omitted for space)</span>
+    <span><span class="dot" style="background:#2E7A5C"></span>Tzolk'in day signs (middle, 20)</span>
+    <span><span class="dot" style="background:#276F82"></span>Tzolk'in numbers (inner, 13)</span>
+  `;
+}
+
+/* Scale control */
+const SCALES = [
+  {label:"1 day", unit:1},
+  {label:"13 days", unit:13},
+  {label:"20 days (uinal)", unit:20},
+  {label:"1 tun (360d)", unit:360},
+  {label:"1 katun (7,200d)", unit:7200},
+  {label:"1 baktun (144,000d)", unit:144000},
+  {label:"Full Long Count", unit:'full'},
+];
+let activeScale = 0;
+function buildScaleRow(){
+  const row = document.getElementById('scaleRow');
+  row.innerHTML = SCALES.map((s,i)=>`<button class="scale-chip ${i===0?'active':''}" data-i="${i}">${s.label}</button>`).join('');
+  row.querySelectorAll('.scale-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      row.querySelectorAll('.scale-chip').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      activeScale = +btn.dataset.i;
+      updateScaleNote(currentReading);
+    });
+  });
+}
+function updateScaleNote(r){
+  if(!r) return;
+  const s = SCALES[activeScale];
+  const note = document.getElementById('scaleNote');
+  if(s.unit==='full'){
+    note.textContent = `${r.total.toLocaleString()} total days have elapsed since the Long Count era-base (0.0.0.0.0).`;
+  } else {
+    const count = Math.floor(r.total / s.unit);
+    note.textContent = `${count.toLocaleString()} complete units of "${s.label}" have elapsed since the era-base.`;
+  }
+}
+
+/* ============================================================
+   DATE EXPLORER
+   ============================================================ */
+document.getElementById('convertGreg').addEventListener('click', ()=>{
+  const val = document.getElementById('gregInput').value;
+  if(!val) return;
+  const [y,m,d] = val.split('-').map(Number);
+  const jdn = gregorianToJDN(y,m,d);
+  const total = jdn - CORRELATION;
+  const r = fullReading(total);
+  document.getElementById('gregResult').innerHTML =
+    `<b>Result</b>Long Count ${r.lc.baktun}.${r.lc.katun}.${r.lc.tun}.${r.lc.uinal}.${r.lc.kin} · ${r.tz.num} ${r.tz.sign} · ${r.hb.day} ${r.hb.month} · JDN ${jdn}`;
+});
+
+document.getElementById('convertLC').addEventListener('click', ()=>{
+  const val = document.getElementById('lcInput').value.trim();
+  const parts = val.split('.').map(Number);
+  if(parts.length!==5 || parts.some(isNaN)){
+    document.getElementById('lcResult').innerHTML = `<b>Result</b>Enter five dot-separated integers, e.g. 13.0.13.14.7`;
+    return;
+  }
+  const total = totalFromLongCount(...parts);
+  const jdn = total + CORRELATION;
+  const g = jdnToGregorian(jdn);
+  const r = fullReading(total);
+  document.getElementById('lcResult').innerHTML =
+    `<b>Result</b>${MONTH_NAMES_G[g.m-1]} ${g.d}, ${g.y} ${g.y<0?'BCE':'CE'} (proleptic Gregorian) · ${r.tz.num} ${r.tz.sign} · ${r.hb.day} ${r.hb.month} · JDN ${jdn}`;
+});
+
+/* ============================================================
+   SYMBOL EXPLORER DATA
+   ============================================================ */
+const SIGN_DATA = {
+  "Imix'": null // placeholder guard
+};
+const SIGN_INFO = {
+  "Imix": {
+    meaning:"Waterlily / the primordial sea",
+    notes:[
+      {tag:'primary', text:"Appears constantly as a Tzolk'in day-name glyph in Classic monumental Initial Series and Calendar Round dates across the lowlands."},
+      {tag:'reconstruction', text:"Read phonetically as IMIX / IMIY by most epigraphers, linked iconographically to the waterlily monster and the surface of the primordial sea."},
+      {tag:'speculative', text:"A connection to a specific 'earth-crocodile' cosmogonic narrative is argued by some scholars but not textually explicit in Classic sources."}
+    ],
+    modern:"In 20th-century Yucatec day-keeping traditions, Imix is often glossed as a day of nurturing and abundance."
+  },
+  "Ik'": {
+    meaning:"Wind / breath",
+    notes:[
+      {tag:'primary', text:"The IK' sign, a stylized T-shaped 'wind' glyph, is one of the most iconographically consistent day signs across regions and periods."},
+      {tag:'reconstruction', text:"Widely read as IK', cognate with the word for wind/breath/spirit in Mayan languages; the T-shape recurs in architecture (wind-holes) and censer iconography."},
+    ],
+    modern:"Frequently associated in living Maya calendrics with breath, life-force, and communication."
+  },
+  "Ak'bal": {
+    meaning:"Night / darkness",
+    notes:[
+      {tag:'primary', text:"The sign shows a distinctive shaded/cross-hatched cartouche interpreted as darkness; frequent in Calendar Round dates on stelae."},
+      {tag:'reconstruction', text:"Read AK'AB or AK'B'AL ('night, darkness') by most epigraphers, based on substitution patterns and phonetic complements."},
+      {tag:'speculative', text:"Association with the interior of caves and the underworld is argued from iconographic context rather than stated directly."}
+    ],
+    modern:"Modern practitioners sometimes gloss it as a day for introspection tied to night and the unconscious."
+  },
+  "K'an": {
+    meaning:"Maize seed / yellow / ripeness",
+    notes:[
+      {tag:'primary', text:"The sign, resembling a perforated bead or kernel, occurs regularly as a day name and separately as the color/word K'AN ('yellow, precious')."},
+      {tag:'reconstruction', text:"Read K'AN; scholars link the day sign to young maize and abundance based on its visual similarity to maize kernel glyphs."},
+    ],
+    modern:"Often associated today with germination, new beginnings, and prosperity in popular calendar guides."
+  },
+  "Chikchan": {
+    meaning:"Celestial serpent",
+    notes:[
+      {tag:'primary', text:"Appears as a day-name glyph, typically with a scaled or reptilian infix."},
+      {tag:'reconstruction', text:"Read CHIK-CHAN, connected to serpent imagery, though the exact underlying word and its full semantic range remain debated among epigraphers."},
+      {tag:'speculative', text:"Ties to specific sky-serpent deities (e.g. celestial vision-serpents on stelae) are argued by iconographers but not glyphically labeled as 'Chikchan' in every case."}
+    ]
+  },
+  "Kimi": {
+    meaning:"Death",
+    notes:[
+      {tag:'primary', text:"The sign often shows a stylized skull or 'closed eye' motif; frequently paired in the corpus with death-god iconography."},
+      {tag:'reconstruction', text:"Read CHAM / KIMI (regional variants) meaning 'death'; the Classic-period reading is debated between Cham and Kimi forms depending on language affiliation."},
+    ]
+  },
+  "Manik'": {
+    meaning:"Deer (hand grasping, per some readings)",
+    notes:[
+      {tag:'primary', text:"The glyph shows a hand-like form and is a common day sign in monumental Calendar Round dates."},
+      {tag:'reconstruction', text:"Colonial Yucatec sources give MANIK' as the day name; some epigraphers propose the Classic reading may differ (e.g. connected to CHIJ, 'deer'), a point of active discussion, not settled consensus."},
+    ],
+    modern:"Popular sources often render this simply as 'Deer' and associate it with the hunt."
+  },
+  "Lamat": {
+    meaning:"Venus / star",
+    notes:[
+      {tag:'primary', text:"The sign, sometimes shown with a four-part or 'star' motif, recurs both as a day name and within Venus-related iconography and codical tables."},
+      {tag:'reconstruction', text:"Read LAMAT in colonial sources; its association with Venus is supported by the star glyph's broader use for 'ek'/Venus references, though the day-sign reading itself is a colonial-era label projected onto Classic forms."},
+    ]
+  },
+  "Muluk": {
+    meaning:"Water / jade (proposed)",
+    notes:[
+      {tag:'primary', text:"Appears regularly as a day-name sign, sometimes shown with a jade-bead or water motif."},
+      {tag:'reconstruction', text:"Read MULUK per colonial sources; the underlying Classic-period reading and semantic range remain less firmly settled than better-attested signs."},
+      {tag:'speculative', text:"Specific associations with rain deities are argued from context rather than direct textual statement."}
+    ]
+  },
+  "Ok": {
+    meaning:"Dog",
+    notes:[
+      {tag:'primary', text:"A day-name sign occurring throughout the monumental corpus."},
+      {tag:'colonial', text:"Colonial Yucatec sources (e.g. Landa's account, the Books of Chilam Balam) give OK as 'dog' and associate it with the underworld guide role dogs play in Mesoamerican belief generally."},
+      {tag:'speculative', text:"Direct Classic-period textual confirmation of a psychopomp/underworld-guide role specifically tied to this day sign (versus dog imagery generally) is limited."}
+    ]
+  },
+  "Chuwen": {
+    meaning:"Howler monkey / artisan",
+    notes:[
+      {tag:'primary', text:"Day-name sign; the associated word CHUWEN also functions in Classic texts as a title/term connected to craftsmanship and scribal or artisanal roles."},
+      {tag:'reconstruction', text:"Epigraphers connect this to howler-monkey iconography, which elsewhere in the corpus (e.g. on painted ceramics) is closely tied to scribes and artists."},
+    ]
+  },
+  "Eb'": {
+    meaning:"Grass / point (disputed etymology)",
+    notes:[
+      {tag:'primary', text:"Regular day-name sign in the corpus."},
+      {tag:'colonial', text:"Colonial Yucatec sources give EB' as the day name; the semantic meaning of the root is debated and not fully resolved."},
+    ]
+  },
+  "Ben": {
+    meaning:"Reed / maize sprout (proposed)",
+    notes:[
+      {tag:'primary', text:"Regular day-name sign, often shown as a simple vertical element."},
+      {tag:'colonial', text:"Colonial sources record the name BEN; Classic-period phonetic substitutions for this sign are comparatively sparse, so the underlying Classic word is less securely established than for many other signs."},
+    ]
+  },
+  "Ix": {
+    meaning:"Jaguar",
+    notes:[
+      {tag:'primary', text:"Day-name sign, often bearing a jaguar-pelt or spotted motif; also appears as a common noun/adjective element (IX/IXIK) in other contexts."},
+      {tag:'reconstruction', text:"Read IX or HIX by different epigraphers depending on regional orthography; jaguar associations are well supported by both text and iconography."},
+    ]
+  },
+  "Men": {
+    meaning:"Eagle / moon (associations proposed)",
+    notes:[
+      {tag:'primary', text:"Day-name sign, sometimes shown with an avian or aged-face motif."},
+      {tag:'colonial', text:"Colonial sources associate this day with old age and, in some ethnohistoric material, with the moon goddess; the Classic-period evidence for these associations is comparatively indirect."},
+    ]
+  },
+  "Kib'": {
+    meaning:"Wax / candle-adjacent term (contested)",
+    notes:[
+      {tag:'primary', text:"Day-name sign, occurring regularly in Calendar Round dates."},
+      {tag:'colonial', text:"Colonial sources record the name KIB'; associations with wax, wasps, or offerings vary across sources and are not uniformly agreed upon."},
+    ]
+  },
+  "Kaban": {
+    meaning:"Earth / earthquake (proposed)",
+    notes:[
+      {tag:'primary', text:"Day-name sign, sometimes shown with a spiral or 'cross-in-square' earth motif also seen in other earth-related glyphs."},
+      {tag:'reconstruction', text:"Connected by epigraphers to CHAB'/KAB, terms bearing on 'earth', based on shared iconographic elements with other earth-referencing signs."},
+    ]
+  },
+  "Etz'nab'": {
+    meaning:"Flint / obsidian blade",
+    notes:[
+      {tag:'primary', text:"Day-name sign, typically depicted with a flint/blade outline consistent with flint-knife glyphs used elsewhere for sacrificial and ritual implements."},
+      {tag:'colonial', text:"Colonial sources record the name and its association with flint knives, consistent with the visual form."},
+    ]
+  },
+  "Kawak": {
+    meaning:"Storm / rain",
+    notes:[
+      {tag:'primary', text:"Day-name sign, often shown with a distinctive cross-hatched or 'stone' texture also used in Classic 'witz' (mountain) and storm-related iconography."},
+      {tag:'reconstruction', text:"Associations with storms and the rain deity Chaak are broadly supported by shared iconographic conventions, though the day sign's precise etymology is debated."},
+    ]
+  },
+  "Ajaw": {
+    meaning:"Lord / ruler",
+    notes:[
+      {tag:'primary', text:"One of the best-attested signs in the entire script: AJAW is both a day name and the primary Classic-period royal title, appearing thousands of times in the monumental corpus."},
+      {tag:'reconstruction', text:"Securely read AJAW ('lord, ruler'); Period Ending dates are frequently anchored to days named Ajaw, giving this sign outsized importance in the Long Count system."},
+    ]
+  }
+};
+
+/* ============================================================
+   RENDER SYMBOL EXPLORER
+   ============================================================ */
+const FILTERS = [
+  {key:'primary', label:'Primary inscription'},
+  {key:'colonial', label:'Colonial source'},
+  {key:'reconstruction', label:'Scholarly reconstruction'},
+  {key:'speculative', label:'Speculative'},
+  {key:'modern', label:'Modern interpretation', modern:true, offByDefault:true},
+];
+let activeFilters = new Set(FILTERS.filter(f=>!f.offByDefault).map(f=>f.key));
+
+function buildFilterRow(){
+  const row = document.getElementById('filterRow');
+  row.innerHTML = FILTERS.map(f=>
+    `<button class="filter-chip ${f.modern?'modern':''} ${activeFilters.has(f.key)?'on':''}" data-k="${f.key}">${f.label}</button>`
+  ).join('');
+  row.querySelectorAll('.filter-chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const k = btn.dataset.k;
+      if(activeFilters.has(k)) activeFilters.delete(k); else activeFilters.add(k);
+      btn.classList.toggle('on');
+      if(currentOpenSign) openSignDetail(currentOpenSign);
+    });
+  });
+}
+
+function miniGlyph(name, big){
+  // Abstract geometric stand-in for an authentic glyph font, styled after carved-stone cartouches.
+  const hash = [...name].reduce((a,c)=>a+c.charCodeAt(0),0);
+  const hue = hash % 360;
+  return `<svg viewBox="0 0 40 40" width="100%" height="100%">
+    <rect x="2" y="2" width="36" height="36" rx="9" fill="hsl(${hue},28%,${big?'32':'30'}%)" stroke="var(--ink)" stroke-width="1.4"/>
+    <circle cx="${10+(hash%18)}" cy="${12+(hash%12)}" r="3.2" fill="hsl(${(hue+40)%360},40%,70%)"/>
+    <path d="M8 27 Q20 ${16+(hash%10)} 32 27" stroke="hsl(${(hue+180)%360},30%,80%)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function buildSignGrid(){
+  const grid = document.getElementById('signGrid');
+  grid.innerHTML = DAY_SIGNS.map(name=>`
+    <button class="daychip" data-name="${name}" aria-label="${name}">
+      <span class="g">${miniGlyph(name,false)}</span>
+      <span class="n">${name}</span>
+    </button>
+  `).join('');
+  grid.querySelectorAll('.daychip').forEach(el=>{
+    el.addEventListener('click', ()=> openSignDetail(el.dataset.name));
+  });
+}
+
+let currentOpenSign = null;
+function openSignDetail(name){
+  currentOpenSign = name;
+  const info = SIGN_INFO[name];
+  const panel = document.getElementById('detailPanel');
+  if(!info){ panel.classList.remove('show'); return; }
+  const notesHtml = info.notes.filter(n=>activeFilters.has(n.tag)).map(n=>`
+    <div class="note-row"><span class="tag ${n.tag}">${FILTERS.find(f=>f.key===n.tag).label}</span><p>${n.text}</p></div>
+  `).join('');
+  const modernHtml = (info.modern && activeFilters.has('modern')) ? `
+    <div class="note-row"><span class="tag modern">Modern interpretation</span><p>${info.modern}</p></div>
+  ` : '';
+  panel.innerHTML = `
+    <div class="detail-head">
+      <span class="g-big">${miniGlyph(name,true)}</span>
+      <div><h3>${name}</h3><div class="m">${info.meaning}</div></div>
+    </div>
+    ${notesHtml || '<p style="color:var(--muted-soft);font-size:13px;">No entries match the current filter selection.</p>'}
+    ${modernHtml}
+  `;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+/* ============================================================
+   LONG COUNT UNITS TABLE
+   ============================================================ */
+const UNITS = [
+  {name:'K\'in', days:1, note:'1 day'},
+  {name:'Winal (Uinal)', days:20, note:'20 k\'in'},
+  {name:'Tun', days:360, note:'18 winal (irregular step)'},
+  {name:'K\'atun', days:7200, note:'20 tun'},
+  {name:'B\'ak\'tun', days:144000, note:'20 k\'atun'},
+  {name:'Piktun', days:2880000, note:'20 b\'ak\'tun — rare in Classic texts'},
+  {name:'Kalabtun', days:57600000, note:'20 piktun — appears mainly in Distance Numbers / mythological dates'},
+  {name:'K\'inchiltun', days:1152000000, note:'20 kalabtun — largely theoretical'},
+  {name:'Alautun', days:23040000000, note:'20 k\'inchiltun — attested chiefly at Palenque (Temple of Inscriptions / Temple XIX context)'},
+];
+function buildUnitsTable(){
+  const t = document.getElementById('unitsTable');
+  t.innerHTML = `<thead><tr><th>Unit</th><th>Days</th><th>Composition</th></tr></thead>
+  <tbody>${UNITS.map((u,i)=>`<tr class="${i<5?'highlight':''}"><td class="name">${u.name}</td><td>${u.days.toLocaleString()}</td><td>${u.note}</td></tr>`).join('')}</tbody>`;
+}
+
+/* ============================================================
+   DIRECTIONS
+   ============================================================ */
+function buildDirGrid(){
+  const grid = document.getElementById('dirGrid');
+  grid.innerHTML = DIRECTIONS.map(d=>`
+    <div class="dir-cell">
+      <div class="sw" style="background:${d.color};${d.border?'border:1px solid var(--limestone-line);':''}"></div>
+      <div class="lab">${d.name}</div>
+      <div class="sub">${d.note}</div>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   MODE TOGGLE + INIT
+   ============================================================ */
+populateTZ();
+buildScaleRow();
+buildFilterRow();
+buildSignGrid();
+buildUnitsTable();
+buildDirGrid();
+renderToday();
+setInterval(renderToday, 60000);
+</script>
+</body>
+</html>
