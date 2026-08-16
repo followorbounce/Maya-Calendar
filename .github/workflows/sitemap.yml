@@ -1,0 +1,51 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Generate sitemap
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+
+          find . -type f -name "*.html" \
+            ! -path "./.git/*" \
+            ! -path "./_site/*" | sort | while read file
+          do
+            path="${file#./}"
+
+            if [ "$path" = "index.html" ]; then
+              url="https://followorbounce.github.io/aerospace/"
+            else
+              url="https://followorbounce.github.io/aerospace/${path%.html}"
+            fi
+
+            echo "  <url><loc>$url</loc></url>" >> sitemap.xml
+          done
+
+          echo '</urlset>' >> sitemap.xml
+
+      - name: Commit sitemap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add sitemap.xml
+
+          git diff --cached --quiet || git commit -m "Update sitemap"
+
+          git push
