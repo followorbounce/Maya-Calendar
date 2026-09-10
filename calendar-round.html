@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Calendar Round — 52 Years of Meshed Cycles — Ju'un K'in</title>
+<meta name="description" content="How the 260-day Tzolk'in and 365-day Haab' mesh into an 18,980-day (52-year) Calendar Round, why a Calendar Round date is ambiguous in absolute time, and when today's combination recurs.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/calendar-round.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Calendar Round — 52 Years of Meshed Cycles">
+<meta property="og:description" content="How the Tzolk'in and Haab' mesh into a 52-year cycle, why the date is ambiguous, and when today's recurs.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/calendar-round.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="calendar-round">
+
+<div id="site-header"></div>
+
+<main class="wrap">
+
+  <section class="hero-intro">
+    <div class="eyebrow">Calendar Round · 18,980 days</div>
+    <h1 class="page-title">Fifty-two years, then it all repeats</h1>
+    <p class="lede">Run the Tzolk'in and the Haab' side by side and a full Tzolk'in+Haab' pairing — like <span class="mono">4 Ajaw 8 Kumk'u</span> — returns only after the least common multiple of 260 and 365: <b>18,980 days</b>, or exactly <b>52 Haab' years</b> and <b>73 Tzolk'in rounds</b>.</p>
+    <div class="callout" id="todayLine">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The mechanism</div>
+    <h2 class="title">Two gears</h2>
+    <p class="lede">The left wheel is the 260-day Tzolk'in; the right is the 365-day Haab'. The red mark on each begins at the mesh point. Step the day count forward and the marks separate — they line up together again only after 18,980 days.</p>
+    <div class="gear-stage" id="gearStage"></div>
+    <div class="gear-controls">
+      <button class="btn ghost" data-step="1">+1 day</button>
+      <button class="btn ghost" data-step="13">+13</button>
+      <button class="btn ghost" data-step="20">+20</button>
+      <button class="btn ghost" data-step="365">+1 Haab'</button>
+      <button class="btn" id="gearPlay">Play</button>
+      <button class="btn ghost" id="gearReset">Reset</button>
+    </div>
+    <div class="scale-note" id="gearNote" style="margin-top:10px">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">A counting fact</div>
+    <h2 class="title">Why only 18,980 combinations</h2>
+    <div class="prose">
+      <p>There are 260 × 365 = <b>94,900</b> ways to pair a Tzolk'in day with a Haab' position on paper. Only <b>18,980</b> of them ever actually occur.</p>
+      <p>The reason: 365 mod 20 = 5, so as the Haab' advances one full year the Tzolk'in day sign advances 5 positions. A given day sign can therefore only ever fall on Haab' day-numbers that differ by multiples of 5 — never on an arbitrary one. Every real Calendar Round date threads this constraint.</p>
+      <h3>The 52-year period mattered</h3>
+      <p>Completing a Calendar Round was a genuine threshold. It is best documented for the Aztec/Mexica as the <em>xiuhmolpilli</em> ("binding of the years") and its New Fire ceremony; the Maya equivalent is less theatrical in the record but the 52-year bundle is a real structural unit, and Maya art shows year-bundle iconography.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The catch</div>
+    <h2 class="title">A Calendar Round date is ambiguous</h2>
+    <div class="prose">
+      <p>Because the pairing repeats every 52 years, "<span class="mono">4 Ajaw 8 Kumk'u</span>" alone cannot say <em>which</em> 4 Ajaw 8 Kumk'u — the one in 3114 BCE, or 52 years later, or any of dozens since. For events inside a single lifetime that is usually enough. For history across centuries it is not.</p>
+      <p>This is exactly the problem the <a href="long-count.html">Long Count</a> solves: an absolute day tally from a fixed era-base that never repeats. Classic monuments typically give both — the Long Count to fix the date, the Calendar Round to name its day.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Recurrence</div>
+    <h2 class="title">When today's Calendar Round returns</h2>
+    <div class="kpi-row" id="recurRow"></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Ambiguity, demonstrated</div>
+    <h2 class="title">Every Gregorian date for one Calendar Round</h2>
+    <p class="lede">Enter a Calendar Round date and a year range. Each row is a real occurrence of that exact day, 52 years apart.</p>
+    <div class="field-card">
+      <div class="field-row">
+        <input type="number" id="crNum" min="1" max="13" placeholder="4" aria-label="Tzolk'in number" style="max-width:80px">
+        <select id="crSign" aria-label="Tzolk'in day sign"></select>
+        <input type="number" id="crDay" min="0" max="19" placeholder="8" aria-label="Haab' day" style="max-width:80px">
+        <select id="crMonth" aria-label="Haab' month"></select>
+      </div>
+      <div class="field-row">
+        <input type="number" id="crFrom" placeholder="from year, e.g. -400" aria-label="From year">
+        <input type="number" id="crTo" placeholder="to year, e.g. 2100" aria-label="To year">
+        <button class="btn" id="crGo">Find</button>
+      </div>
+      <div class="result-line" id="crOut"><b>Occurrences</b>—</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+  var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+  var td = MC.todayInZone(tz);
+  var R = MC.readingFromGregorian(td.y, td.m, td.d);
+
+  document.getElementById('todayLine').innerHTML =
+    "Today's Calendar Round is <b>" + MC.calendarRoundLabel(R) + "</b> — position " +
+    R.crPos.toLocaleString() + " of 18,980 in the current 52-year bundle.";
+
+  /* ---- gears ---- */
+  var offset = 0; // days stepped
+  var playing = null;
+  function drawGears() {
+    var stage = document.getElementById('gearStage');
+    var w = 460, hh = 288;
+    var svg = '<svg viewBox="0 0 ' + w + ' ' + hh + '" role="img" aria-label="Meshing Tzolk\'in and Haab\' gears">';
+    // two wheels that mesh at a tangent point on the horizontal centre line
+    var L = { cx: 168, cy: 144, r: 86, teeth: 260, dir: 1, mesh: 90 };
+    var H = { cx: 168 + 86 + 108, cy: 144, r: 108, teeth: 365, dir: -1, mesh: 270 };
+    function wheel(G, label) {
+      var turns = (offset / G.teeth) * G.dir;       // full turns of this wheel
+      var rot = turns * 360;
+      var drawn = 60, g = '<g>';
+      for (var i = 0; i < drawn; i++) {
+        var ang = (i / drawn) * 360 + rot;
+        var rad = (ang - 90) * Math.PI / 180;
+        var x1 = G.cx + G.r * Math.cos(rad), y1 = G.cy + G.r * Math.sin(rad);
+        var x2 = G.cx + (G.r + 9) * Math.cos(rad), y2 = G.cy + (G.r + 9) * Math.sin(rad);
+        g += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="var(--muted-soft)" stroke-width="1.4"/>';
+      }
+      g += '<circle cx="' + G.cx + '" cy="' + G.cy + '" r="' + G.r + '" fill="var(--panel-alt)" stroke="var(--limestone-line)"/>';
+      // "home" marker (where day 0 started) — begins at the mesh point, drifts as the wheel turns
+      var hr = (G.mesh + rot - 90) * Math.PI / 180;
+      g += '<circle cx="' + (G.cx + (G.r - 4) * Math.cos(hr)).toFixed(1) + '" cy="' + (G.cy + (G.r - 4) * Math.sin(hr)).toFixed(1) + '" r="5" fill="var(--cinnabar)"/>';
+      g += '<text x="' + G.cx + '" y="' + (G.cy - 4) + '" text-anchor="middle" font-family="var(--serif-sc)" font-size="12" fill="var(--ink)">' + label + '</text>';
+      g += '<text x="' + G.cx + '" y="' + (G.cy + 14) + '" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--muted-soft)">' + G.teeth + ' teeth</text>';
+      return g + '</g>';
+    }
+    svg += wheel(L, "Tzolk'in");
+    svg += wheel(H, "Haab'");
+    // fixed mesh marker + label
+    var mx = L.cx + L.r + 9;
+    svg += '<line x1="' + mx + '" y1="' + (L.cy - 16) + '" x2="' + mx + '" y2="' + (L.cy + 16) + '" stroke="var(--jade)" stroke-width="2"/>';
+    svg += '<text x="' + mx + '" y="272" text-anchor="middle" font-family="var(--mono)" font-size="9" fill="var(--jade)">mesh point — the two red marks realign here every 18,980 days</text>';
+    svg += '</svg>';
+    stage.innerHTML = svg;
+  }
+  function gearNote() {
+    var total = R.total + offset;
+    var r = MC.readingFromTotal(total);
+    var toAlign = MC.mod(-offset, 18980);
+    document.getElementById('gearNote').innerHTML =
+      '+' + offset.toLocaleString() + ' days → <b>' + r.tz.num + ' ' + r.tz.sign + ' ' + MC.haabLabel(r.hb) + '</b>' +
+      (offset === 0 ? '' : ' · realigns with today\'s pairing in ' + toAlign.toLocaleString() + ' days (' + (toAlign / 365).toFixed(1) + ' Haab\' years)');
+  }
+  document.getElementById('gearStage').closest('section').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-step]'); if (!b) return;
+    offset += +b.dataset.step; drawGears(); gearNote();
+  });
+  document.getElementById('gearReset').addEventListener('click', function () {
+    offset = 0; stopPlay(); drawGears(); gearNote();
+  });
+  function stopPlay() { if (playing) { clearInterval(playing); playing = null; document.getElementById('gearPlay').textContent = 'Play'; } }
+  document.getElementById('gearPlay').addEventListener('click', function () {
+    if (playing) { stopPlay(); return; }
+    this.textContent = 'Pause';
+    playing = setInterval(function () { offset += 73; drawGears(); gearNote(); }, 90);
+  });
+  drawGears(); gearNote();
+
+  /* ---- recurrence ---- */
+  (function () {
+    var rows = [];
+    for (var k = 1; k <= 3; k++) {
+      var total = R.total + k * 18980;
+      var g = MC.jdnToGregorian(total + MC.CORRELATION);
+      rows.push('<div class="kpi"><div class="kpi-k">Recurrence ' + k + '</div><div class="kpi-v">' + MC.formatGregorian(g) +
+        '</div><div class="kpi-sub">' + (k * 52) + ' years · Long Count ' + MC.formatLC(MC.longCountFromTotal(total)) + '</div></div>');
+    }
+    var prev = R.total - 18980, pg = MC.jdnToGregorian(prev + MC.CORRELATION);
+    rows.unshift('<div class="kpi"><div class="kpi-k">Previous</div><div class="kpi-v">' + MC.formatGregorian(pg) +
+      '</div><div class="kpi-sub">52 years ago · ' + MC.formatLC(MC.longCountFromTotal(prev)) + '</div></div>');
+    document.getElementById('recurRow').innerHTML = rows.join('');
+  })();
+
+  /* ---- ambiguity finder ---- */
+  (function () {
+    document.getElementById('crSign').innerHTML = MC.DAY_SIGNS.map(function (s) { return '<option>' + s + '</option>'; }).join('');
+    document.getElementById('crMonth').innerHTML = MC.HAAB_MONTHS.map(function (m) { return '<option>' + m + '</option>'; }).join('');
+    document.getElementById('crNum').value = R.tz.num;
+    document.getElementById('crSign').value = R.tz.sign;
+    document.getElementById('crDay').value = R.hb.day;
+    document.getElementById('crMonth').value = R.hb.month;
+    document.getElementById('crFrom').value = -400;
+    document.getElementById('crTo').value = 2100;
+
+    document.getElementById('crGo').addEventListener('click', function () {
+      var num = +document.getElementById('crNum').value;
+      var sign = document.getElementById('crSign').value;
+      var day = +document.getElementById('crDay').value;
+      var month = document.getElementById('crMonth').value;
+      var y0 = +document.getElementById('crFrom').value, y1 = +document.getElementById('crTo').value;
+      // find CR position p in 0..18979
+      var p = -1;
+      for (var i = 0; i < 18980; i++) {
+        var tzz = MC.tzolkinFromTotal(i), hb = MC.haabFromTotal(i);
+        if (tzz.num === num && tzz.sign === sign && hb.day === day && hb.month === month) { p = i; break; }
+      }
+      var out = document.getElementById('crOut');
+      if (p < 0) { out.innerHTML = '<b>Occurrences</b>That Tzolk\'in + Haab\' pairing never occurs — the 5-day offset rule forbids it.'; return; }
+      var lo = MC.gregorianToJDN(y0, 1, 1) - MC.CORRELATION;
+      var hi = MC.gregorianToJDN(y1, 12, 31) - MC.CORRELATION;
+      var kmin = Math.ceil((lo - p) / 18980), kmax = Math.floor((hi - p) / 18980);
+      var list = [];
+      for (var k = kmin; k <= kmax && list.length < 40; k++) {
+        var total = p + k * 18980;
+        list.push(MC.formatGregorian(MC.jdnToGregorian(total + MC.CORRELATION)) + '  ·  ' + MC.formatLC(MC.longCountFromTotal(total)));
+      }
+      out.innerHTML = '<b>' + list.length + ' occurrence' + (list.length === 1 ? '' : 's') + ' of ' + num + ' ' + sign + ' ' +
+        (day === 0 ? 'Seating of ' : day + ' ') + month + '</b>' + list.join('<br>');
+    });
+  })();
+
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>

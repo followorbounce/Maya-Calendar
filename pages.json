@@ -1,0 +1,74 @@
+{
+  "site": {
+    "url": "https://followorbounce.github.io/Maya-Calendar/",
+    "title": "Ju'un K'in",
+    "tagline": "A Classic Maya Calendar Reference",
+    "correlation": "GMT 584283"
+  },
+  "pages": [
+    {
+      "slug": "index",
+      "file": "index.html",
+      "code": "K'IN",
+      "label": "Today",
+      "blurb": "Today's reading across every Classic Maya cycle, an interactive wheel, and a bidirectional date converter.",
+      "status": "live"
+    },
+    {
+      "slug": "tzolkin",
+      "file": "tzolkin.html",
+      "code": "260",
+      "label": "Tzolk'in — Sacred Calendar",
+      "blurb": "The 260-day count: 13 numbers, 20 day signs, the 20 trecenas, origin theories, and a full sourced reference for every day sign.",
+      "status": "live"
+    },
+    {
+      "slug": "haab",
+      "file": "haab.html",
+      "code": "365",
+      "label": "Haab' — Solar Calendar",
+      "blurb": "The 365-day vague year: 18 months plus Wayeb', the seating convention, the year bearers, and its drift against the tropical year.",
+      "status": "live"
+    },
+    {
+      "slug": "calendar-round",
+      "file": "calendar-round.html",
+      "code": "18980",
+      "label": "Calendar Round",
+      "blurb": "How the Tzolk'in and Haab' mesh into a 52-year cycle, why a Calendar Round date is ambiguous, and when today's recurs.",
+      "status": "live"
+    },
+    {
+      "slug": "long-count",
+      "file": "long-count.html",
+      "code": "0.0.0.0.0",
+      "label": "Long Count",
+      "blurb": "The place-value day tally: nested units to the alautun, Distance Numbers, the 819-day count, and the lunar Supplementary Series.",
+      "status": "live"
+    },
+    {
+      "slug": "cosmology",
+      "file": "cosmology.html",
+      "code": "4+1",
+      "label": "Directional Cosmology",
+      "blurb": "Four directions, four colours, one centre — what the Classic sources actually attest versus colonial systematization.",
+      "status": "live"
+    },
+    {
+      "slug": "dreamspell",
+      "file": "dreamspell.html",
+      "code": "13:20",
+      "label": "Dreamspell Interpretation",
+      "blurb": "A full Galactic Signature calculator for the modern Dreamspell count — seals, tones, wavespell, Oracle — with a note on how it differs from the traditional Tzolk'in.",
+      "status": "live"
+    },
+    {
+      "slug": "sources",
+      "file": "sources.html",
+      "code": "REF",
+      "label": "Sources & Method",
+      "blurb": "The evidence tiers this reference uses, the correlation question, and a working bibliography.",
+      "status": "live"
+    }
+  ]
+}

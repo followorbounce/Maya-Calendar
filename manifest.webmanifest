@@ -1,0 +1,13 @@
+{
+  "name": "Ju'un K'in — Classic Maya Calendar",
+  "short_name": "Ju'un K'in",
+  "description": "A reference exhibit for the Classic Maya calendar: Long Count, Tzolk'in, Haab', Calendar Round, and the modern Dreamspell.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F2F1EC",
+  "theme_color": "#F2F1EC",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

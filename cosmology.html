@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Directional Cosmology — Four Colours, One Centre — Ju'un K'in</title>
+<meta name="description" content="The Maya quincunx: four directions, four colours, a central World Tree. What the Classic sources attest, and where the tidy four-colour scheme actually comes from.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/cosmology.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Directional Cosmology — Four Colours, One Centre">
+<meta property="og:description" content="The Maya quincunx: four directions, four colours, a central World Tree — attestation versus colonial systematization.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/cosmology.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="cosmology">
+
+<div id="site-header"></div>
+
+<main class="wrap">
+
+  <section class="hero-intro">
+    <div class="eyebrow">Cosmology · 4 + 1</div>
+    <h1 class="page-title">Four directions, one centre</h1>
+    <p class="lede">Maya space was quartered — four world-directions, each with a colour, a bird, a tree, a sky-bearer — around a fifth point, the axis where the World Tree rises. The calendar is woven through this scheme: the year bearers process around the directions, and the 819-day count steps through them explicitly.</p>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The quincunx</div>
+    <h2 class="title">The five-point diagram</h2>
+    <div class="ring-stage">
+      <div class="ring-svg-holder" style="max-width:360px">
+        <svg viewBox="0 0 300 300" id="quinc" role="img" aria-label="The Maya quincunx of four directions and a centre"></svg>
+      </div>
+    </div>
+    <div class="dir-grid" id="dirGrid" style="margin-top:18px"></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">In the sources</div>
+    <h2 class="title">What is actually attested</h2>
+    <div class="prose">
+      <h3>Primary — Classic period</h3>
+      <ul>
+        <li>Colour + direction terms occur in Classic inscriptions, and the 819-day count formula pairs each station with a direction and colour.</li>
+        <li>Directional gods and "sky-bearers" (the Bacabs / Pawahtuns) appear in Classic art holding up the corners of the sky.</li>
+        <li>Rain deities (Chaak) and other supernaturals are quadrupled — one per direction — on Classic ceramics.</li>
+      </ul>
+      <h3>Postclassic codices</h3>
+      <ul>
+        <li>The Dresden and Madrid Codices give the clearest colour-direction diagrams — New Year pages, world-direction almanacs, the "cosmogram" arrangements.</li>
+      </ul>
+      <h3>Colonial — Yucatec</h3>
+      <ul>
+        <li>Landa's <em>Relación</em> and the Books of Chilam Balam lay out the neat, symmetrical "East red / North white / West black / South yellow, centre blue-green" system that most popular accounts repeat.</li>
+      </ul>
+      <div class="scope-note">
+        <b>Editorial note —</b> the crisp four-direction / four-colour table is largely a colonial Yucatec systematization. Colour-direction association is genuinely Classic; its <em>exact, uniform</em> mapping as usually printed is a scholarly extrapolation backward from Landa and Chilam Balam, not a single Classic-era statement. Sources also disagree on whether "north" and "south" meant compass points or "up/zenith" and "down/nadir."
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Calendar link</div>
+    <h2 class="title">The count moves through the directions</h2>
+    <div class="prose">
+      <p>Today the <a href="long-count.html">819-day count</a> stands at the <b id="dirNow">—</b> station. The year bearers, too, are imagined as walking a circuit of the directions — each new Haab' year "carried" into one quarter of the world, the burden passed around the compass over a four-year sub-cycle before the colours repeat.</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+  var DIRS = [
+    { name: 'East', color: 'red', hex: '#AE4227', note: 'sunrise; where the day begins', x: 260, y: 150 },
+    { name: 'North', color: 'white', hex: '#E9E3D2', note: 'or "up" / zenith / the ancestral dead', x: 150, y: 40, border: true },
+    { name: 'West', color: 'black', hex: '#1B1712', note: 'sunset; the road into the underworld', x: 40, y: 150 },
+    { name: 'South', color: 'yellow', hex: '#BD8A2E', note: 'or "down" / nadir', x: 150, y: 260 },
+    { name: 'Centre', color: 'blue-green', hex: '#1E7A54', note: 'the World Tree (yaxche\'); the axis mundi', x: 150, y: 150 }
+  ];
+
+  (function () {
+    var ns = 'http://www.w3.org/2000/svg', s = '';
+    s += '<line x1="150" y1="150" x2="260" y2="150" stroke="var(--limestone-line)"/>';
+    s += '<line x1="150" y1="150" x2="40" y2="150" stroke="var(--limestone-line)"/>';
+    s += '<line x1="150" y1="150" x2="150" y2="40" stroke="var(--limestone-line)"/>';
+    s += '<line x1="150" y1="150" x2="150" y2="260" stroke="var(--limestone-line)"/>';
+    DIRS.forEach(function (d) {
+      s += '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + (d.name === 'Centre' ? 22 : 17) + '" fill="' + d.hex + '"' + (d.border ? ' stroke="var(--limestone-line)"' : '') + '/>';
+      s += '<text x="' + d.x + '" y="' + (d.y + (d.name === 'Centre' ? 40 : 32)) + '" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink)">' + d.name + '</text>';
+    });
+    document.getElementById('quinc').innerHTML = s;
+  })();
+
+  document.getElementById('dirGrid').innerHTML = DIRS.map(function (d) {
+    return '<div class="dir-cell"><div class="sw" style="background:' + d.hex + (d.border ? ';border:1px solid var(--limestone-line)' : '') + '"></div>' +
+      '<div class="lab">' + d.name + '</div><div class="sub">' + d.color + ' — ' + d.note + '</div></div>';
+  }).join('');
+
+  var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+  var td = MC.todayInZone(tz);
+  var R = MC.readingFromGregorian(td.y, td.m, td.d);
+  document.getElementById('dirNow').textContent = R.e819.station.dir + ' / ' + R.e819.station.color;
+
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://followorbounce.github.io/aerospace/</loc></url>
-  <url><loc>https://followorbounce.github.io/aerospace/maya-calendar-ru</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/tzolkin.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/haab.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/calendar-round.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/long-count.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/cosmology.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/dreamspell.html</loc></url>
+  <url><loc>https://followorbounce.github.io/Maya-Calendar/sources.html</loc></url>
 </urlset>

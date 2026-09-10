@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Long Count — Place-Value Days Since Creation — Ju'un K'in</title>
+<meta name="description" content="The Maya Long Count: a place-value day tally from a 3114 BCE era-base. Nested units to the alautun, Distance Numbers, the 819-day count, and the lunar Supplementary Series.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/long-count.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Long Count — Place-Value Days Since Creation">
+<meta property="og:description" content="Nested units to the alautun, Distance Numbers, the 819-day count, and the lunar Supplementary Series.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/long-count.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="long-count">
+
+<div id="site-header"></div>
+
+<main class="wrap">
+
+  <section class="hero-intro">
+    <div class="eyebrow">Long Count · 0.0.0.0.0</div>
+    <h1 class="page-title">Every day has a number</h1>
+    <p class="lede">The Long Count is a place-value tally of days elapsed since a mythological era-base — <span class="mono">11 August 3114 BCE</span> in the proleptic Gregorian calendar. It is mostly base-20, with one deliberate irregularity: 18 winals, not 20, make a tun, pulling the third place close to a 360-day year.</p>
+    <div class="callout" id="odometer">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The places</div>
+    <h2 class="title">How the units nest</h2>
+    <p class="lede">Read right to left: k'in, winal, tun, k'atun, b'ak'tun. The first five places carry ordinary Classic dates; the larger units appear mainly in Distance Numbers and mythological reckonings.</p>
+    <div class="tbl-scroll">
+      <table class="data-table" id="unitsTable"></table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Doing arithmetic</div>
+    <h2 class="title">Distance Numbers</h2>
+    <p class="lede">Maya scribes moved between dates by adding or subtracting a <em>Distance Number</em> — itself written in the same place-value units. Enter a start date and a Distance Number to step forward or back.</p>
+    <div class="field-card">
+      <label>Start — Long Count</label>
+      <div class="field-row"><input type="text" id="dnStart" placeholder="9.12.11.5.18"></div>
+      <label>Distance Number — winal.k'in or tun.winal.k'in …</label>
+      <div class="field-row">
+        <input type="text" id="dnDelta" placeholder="1.7.11">
+        <select id="dnDir"><option value="1">forward</option><option value="-1">backward</option></select>
+        <button class="btn" id="dnGo">Step</button>
+      </div>
+      <div class="result-line" id="dnOut"><b>Result</b>—</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">A fourth cycle</div>
+    <h2 class="title">The 819-day count</h2>
+    <div class="prose">
+      <p>Alongside the Long Count, Tzolk'in and Haab', many Classic inscriptions carry an <b>819-day count</b> — 819 = 7 × 9 × 13, binding three sacred numbers. Each station is tied to one of the four directions and its colour, cycling East → North → West → South, so the full directional cycle runs 4 × 819 = 3,276 days.</p>
+      <p>Its purpose is debated — a planetary or ritual almanac keyed to the world-directions is the leading reading. This tool anchors a station on the era-base for illustration; real inscriptions cite the specific station preceding their date.</p>
+    </div>
+    <div class="kpi-row" id="e819Row"></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The Supplementary Series</div>
+    <h2 class="title">The lunar glyphs</h2>
+    <div class="prose">
+      <p>A full Classic <em>Initial Series</em> date rarely stops at the Calendar Round. It continues with the <b>Supplementary Series</b>: the Lord of the Night (Glyph G) and its partner Glyph F, then the lunar record — the moon's age, which lunation of a six-month cycle it is (Glyph C), and whether that lunation was assigned 29 or 30 days.</p>
+      <p>The values below are an <b>astronomical approximation</b> from a modern synodic month, shown to convey the kind of information the glyphs carried — not a reconstruction of the specific Classic scribal value, which used its own lunar tables.</p>
+    </div>
+    <div class="kpi-row" id="lunarRow"></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Converter</div>
+    <h2 class="title">Long Count for any date</h2>
+    <div class="explorer-grid">
+      <div class="field-card">
+        <label for="lcg">Gregorian date</label>
+        <div class="field-row"><input type="date" id="lcg"><button class="btn" id="lcgGo">Convert</button></div>
+        <div class="result-line" id="lcgOut"><b>Result</b>—</div>
+      </div>
+      <div class="field-card">
+        <label for="lcl">Long Count</label>
+        <div class="field-row"><input type="text" id="lcl" placeholder="13.0.13.14.7"><button class="btn" id="lclGo">Convert</button></div>
+        <div class="result-line" id="lclOut"><b>Result</b>—</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+  var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+  var td = MC.todayInZone(tz);
+  var R = MC.readingFromGregorian(td.y, td.m, td.d);
+
+  document.getElementById('odometer').innerHTML =
+    "Today: <b>" + MC.formatLC(R.lc) + "</b> — that is " + R.total.toLocaleString() +
+    " days since the era-base, within b'ak'tun " + (R.lc.baktun) + " of the current creation.";
+
+  /* units table */
+  (function () {
+    var cur = R.total;
+    var rows = MC.LONG_COUNT_UNITS.map(function (u, i) {
+      var count = Math.floor(cur / u.days);
+      return '<tr class="' + (i < 5 ? 'highlight' : '') + '"><td class="name">' + u.name + '</td><td>' + u.days.toLocaleString() +
+        '</td><td class="txt">' + u.note + '</td><td>' + count.toLocaleString() + '</td></tr>';
+    });
+    document.getElementById('unitsTable').innerHTML =
+      '<thead><tr><th>Unit</th><th>Days</th><th>Composition</th><th>Elapsed today</th></tr></thead><tbody>' + rows.join('') + '</tbody>';
+  })();
+
+  /* Distance Numbers */
+  function parseDots(s) {
+    var p = s.trim().split('.').map(Number);
+    if (p.some(isNaN) || !p.length) return null;
+    // interpret right-to-left as k'in, winal, tun, k'atun, b'ak'tun
+    var mult = [1, 20, 360, 7200, 144000], total = 0;
+    for (var i = 0; i < p.length; i++) total += p[p.length - 1 - i] * (mult[i] || mult[mult.length - 1]);
+    return total;
+  }
+  document.getElementById('dnStart').value = MC.formatLC(R.lc);
+  document.getElementById('dnGo').addEventListener('click', function () {
+    var start = parseDots(document.getElementById('dnStart').value);
+    var delta = parseDots(document.getElementById('dnDelta').value);
+    var dir = +document.getElementById('dnDir').value;
+    var out = document.getElementById('dnOut');
+    if (start == null || delta == null) { out.innerHTML = '<b>Result</b>Enter dot-separated integers for both fields.'; return; }
+    var total = start + dir * delta;
+    var r = MC.readingFromTotal(total);
+    out.innerHTML = '<b>Result</b>' + MC.formatLC(r.lc) + ' · ' + r.tz.num + ' ' + r.tz.sign + ' ' + MC.haabLabel(r.hb) +
+      ' · ' + MC.formatGregorian(r.greg) + ' · ' + (dir > 0 ? '+' : '−') + delta.toLocaleString() + ' days';
+  });
+
+  /* 819 */
+  (function () {
+    var e = R.e819;
+    document.getElementById('e819Row').innerHTML =
+      '<div class="kpi"><div class="kpi-k">Current station</div><div class="kpi-v">' + e.station.dir + '</div><div class="kpi-sub">colour: ' + e.station.color + '</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Days into station</div><div class="kpi-v">' + e.sinceStation + ' / 819</div><div class="kpi-sub">next station in ' + e.daysToNext + ' days</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Directional cycle</div><div class="kpi-v">' + MC.mod(e.stationIndex, 4) * 819 + '+' + e.sinceStation + '</div><div class="kpi-sub">of 3,276 (4 × 819)</div></div>';
+  })();
+
+  /* lunar */
+  (function () {
+    var L = R.lunar;
+    var phase = L.phaseFraction < 0.03 || L.phaseFraction > 0.97 ? 'new'
+      : L.phaseFraction < 0.22 ? 'waxing crescent' : L.phaseFraction < 0.28 ? 'first quarter'
+      : L.phaseFraction < 0.47 ? 'waxing gibbous' : L.phaseFraction < 0.53 ? 'full'
+      : L.phaseFraction < 0.72 ? 'waning gibbous' : L.phaseFraction < 0.78 ? 'last quarter' : 'waning crescent';
+    document.getElementById('lunarRow').innerHTML =
+      '<div class="kpi"><div class="kpi-k">Glyph G — Lord of the Night</div><div class="kpi-v">' + R.lord + '</div><div class="kpi-sub">reconstructed 9-night cycle</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Moon age</div><div class="kpi-v">' + L.ageInt + ' days</div><div class="kpi-sub">' + phase + '</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Glyph C — lunation</div><div class="kpi-v">' + L.glyphC + ' of 6</div><div class="kpi-sub">position in the 6-month cycle</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Lunation number</div><div class="kpi-v">' + L.lunationNo.toLocaleString() + '</div><div class="kpi-sub">modern Brown series</div></div>';
+  })();
+
+  /* converters */
+  document.getElementById('lcg').value = (R.greg.y > 0 ? String(R.greg.y).padStart(4, '0') : '') + '-' + String(R.greg.m).padStart(2, '0') + '-' + String(R.greg.d).padStart(2, '0');
+  document.getElementById('lcgGo').addEventListener('click', function () {
+    var p = document.getElementById('lcg').value.split('-').map(Number); if (p.length !== 3) return;
+    var r = MC.readingFromGregorian(p[0], p[1], p[2]);
+    document.getElementById('lcgOut').innerHTML = '<b>Result</b>' + MC.formatLC(r.lc) + ' · ' + r.tz.num + ' ' + r.tz.sign + ' ' + MC.haabLabel(r.hb) + ' · JDN ' + r.jdn;
+  });
+  document.getElementById('lcl').value = MC.formatLC(R.lc);
+  document.getElementById('lclGo').addEventListener('click', function () {
+    var p = document.getElementById('lcl').value.trim().split('.').map(Number);
+    if (p.length !== 5 || p.some(isNaN)) { document.getElementById('lclOut').innerHTML = '<b>Result</b>Enter five dot-separated integers.'; return; }
+    var r = MC.readingFromLongCount(p[0], p[1], p[2], p[3], p[4]);
+    document.getElementById('lclOut').innerHTML = '<b>Result</b>' + MC.formatGregorian(r.greg) + ' · ' + r.tz.num + ' ' + r.tz.sign + ' ' + MC.haabLabel(r.hb) + ' · JDN ' + r.jdn;
+  });
+
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Haab' — the 365-Day Solar Calendar — Ju'un K'in</title>
+<meta name="description" content="The Haab' vague year: 18 months of 20 days plus the 5-day Wayeb'. The seating convention, the year bearers under the Tikal and Yucatec systems, and the calendar's drift against the tropical year.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/haab.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Haab' — the 365-Day Solar Calendar">
+<meta property="og:description" content="18 months plus Wayeb', the seating convention, the year bearers, and the drift against the tropical year.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/haab.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="haab">
+
+<div id="site-header"></div>
+
+<main class="wrap">
+
+  <section class="hero-intro">
+    <div class="eyebrow">Haab' · 18 × 20 + 5</div>
+    <h1 class="page-title">The 365-day solar calendar</h1>
+    <p class="lede">Eighteen named months of twenty days, then <em>Wayeb'</em> — five "nameless" days that close the year. It is called a <b>vague year</b> because it has no leap-day correction: 365 whole days against a tropical year of about 365.2422, so the Haab' slips roughly one day every four years against the seasons and completes a full lap in about 1,507 years.</p>
+    <div class="callout" id="todayLine">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The year</div>
+    <h2 class="title">Eighteen months and Wayeb'</h2>
+    <p class="lede">The current month is outlined. Wayeb' is marked in red — a liminal, inauspicious span when, per Landa's colonial account, people minimized activity and performed year-renewal rites.</p>
+    <div class="haab-strip" id="haabStrip"></div>
+    <div class="tbl-scroll" style="margin-top:18px">
+      <table class="data-table" id="monthTable"></table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">A glyphic quirk</div>
+    <h2 class="title">"Seating," not day zero</h2>
+    <div class="prose">
+      <p>Maya scribes did not write "0 Pop." The first day of a month is its <em>seating</em> — <span class="mono">chum</span> — as though the month takes its seat before its count begins. So a date runs: <b>seating of Pop</b>, then <b>1 Pop</b>, <b>2 Pop</b> … up to <b>19 Pop</b>, then the seating of the next month. This reference writes the seating day as "Seating of &lt;month&gt;."</p>
+      <p>The same logic governs the Long Count's period endings, which is why a k'atun ends on a day like <span class="mono">13.0.0.0.0</span> — a completion, a seating of the next unit.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Year bearers</div>
+    <h2 class="title">The four days that can carry a year</h2>
+    <p class="lede">Because 365 mod 20 = 5, only four of the twenty day signs can ever coincide with a fixed Haab' station — and the set depends on <em>which</em> station is used as the New Year anchor. Two systems are historically attested.</p>
+    <div class="kpi-row" id="ybRow"></div>
+    <div class="tbl-scroll" style="margin-top:14px">
+      <table class="data-table">
+        <thead><tr><th>System</th><th>Anchor station</th><th>Year-bearer set</th><th>Attested</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Classic (Tikal)</td><td>seating of Pop</td><td>Ik' · Manik' · Eb' · Kaban</td><td class="txt">Classic monuments at Tikal and much of the central lowlands</td></tr>
+          <tr><td class="name">Colonial (Yucatec)</td><td>"1 Pop" (= Classic 2 Pop under GMT 584283)</td><td>K'an · Muluk · Ix · Kawak</td><td class="txt">Landa; the Books of Chilam Balam; post-conquest Yucatán</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">The two sets sit two days apart in the Haab' — the colonial Yucatec "New Year of 1 Pop" aligns with what Classic scribes, using the seating convention, would write as 2 Pop. Same calendar; different naming station and a correlation subtlety.</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The vague year drifts</div>
+    <h2 class="title">Where 1 Pop lands across the centuries</h2>
+    <p class="lede">With no leap correction, the Haab' New Year moves steadily earlier in the Gregorian year. Same Haab' date, different season, century by century.</p>
+    <div class="tbl-scroll">
+      <table class="data-table" id="driftTable"></table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Your date</div>
+    <h2 class="title">Haab' for any date</h2>
+    <div class="field-card" style="max-width:420px">
+      <label for="hd">Gregorian date</label>
+      <div class="field-row">
+        <input type="date" id="hd">
+        <button class="btn" id="hdGo">Read</button>
+      </div>
+      <div class="result-line" id="hdOut"><b>Result</b>—</div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+  var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+  var t = MC.todayInZone(tz);
+  var R = MC.readingFromGregorian(t.y, t.m, t.d);
+
+  document.getElementById('todayLine').innerHTML =
+    "Today is <b>" + MC.haabLabel(R.hb) + "</b> — Haab' day " + (R.hb.doy) + " of 365" +
+    (R.hb.month === "Wayeb'" ? " (inside Wayeb')" : "") + ".";
+
+  /* strip */
+  (function () {
+    var strip = document.getElementById('haabStrip'), cells = [];
+    for (var m = 0; m < 19; m++) {
+      var name = MC.HAAB_MONTHS[m];
+      var isW = name === "Wayeb'";
+      var cls = 'haab-month' + (isW ? ' wayeb' : '') + (m === R.hb.monthIndex ? ' current' : '');
+      cells.push('<div class="' + cls + '" data-key="' + name + '" title="' + name + '"><span class="mn">' + name + '</span><span class="md">' + (isW ? '5 days' : '20 days') + (m === R.hb.monthIndex ? ' · day ' + R.hb.day : '') + '</span></div>');
+    }
+    strip.innerHTML = cells.join('');
+  })();
+
+  /* month table */
+  (function () {
+    var rows = MC.HAAB_MONTHS.map(function (name, i) {
+      var isW = name === "Wayeb'";
+      return '<tr class="' + (i === R.hb.monthIndex ? 'current' : '') + '"><td>' + (i + 1) + '</td><td class="name">' + name +
+        '</td><td>' + (isW ? '5' : '20') + '</td><td class="txt">' + (MC.HAAB_MONTH_MEANING[name] || '—') + '</td></tr>';
+    });
+    document.getElementById('monthTable').innerHTML =
+      '<thead><tr><th>#</th><th>Month</th><th>Days</th><th>Name / association (many debated)</th></tr></thead><tbody>' + rows.join('') + '</tbody>';
+  })();
+
+  /* year bearers for the current Haab year.
+     Under GMT 584283 the Classic (Tikal) set falls on the seating of Pop and the
+     colonial (Yucatec) set falls on 2 Pop — a documented correlation nuance, not
+     a mismatch: the colonial sources' "1 Pop" New Year lines up with Classic 2 Pop. */
+  (function () {
+    var newYear = R.total - R.hb.doy; // seating of Pop
+    var tikal = new Set(['Ik\'', 'Manik\'', 'Eb\'', 'Kaban']);
+    var yucatec = new Set(['K\'an', 'Muluk', 'Ix', 'Kawak']);
+    function at(off) { return MC.tzolkinFromTotal(newYear + off); }
+    var a = at(0), b = at(2);
+    document.getElementById('ybRow').innerHTML =
+      '<div class="kpi"><div class="kpi-k">Classic · seating of Pop</div><div class="kpi-v">' + a.num + ' ' + a.sign +
+      '</div><div class="kpi-sub">' + (tikal.has(a.sign) ? 'in the Tikal bearer set' : 'set: ' + a.sign) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-k">Colonial Yucatec · 2 Pop</div><div class="kpi-v">' + b.num + ' ' + b.sign +
+      '</div><div class="kpi-sub">' + (yucatec.has(b.sign) ? 'in the Yucatec bearer set' : 'set: ' + b.sign) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-k">This Haab\' year began</div><div class="kpi-v">' +
+      MC.formatGregorian(MC.jdnToGregorian(newYear + MC.CORRELATION)).replace(/,.*/, '') +
+      '</div><div class="kpi-sub">' + MC.formatGregorian(MC.jdnToGregorian(newYear + MC.CORRELATION)) + '</div></div>';
+  })();
+
+  /* drift table: Gregorian date of "1 Pop" (Haab day-of-year 1) per century */
+  (function () {
+    function firstPopInYear(gYear) {
+      // total for a date near mid-year, then walk back to Haab doy == 1
+      var total = MC.gregorianToJDN(gYear, 7, 1) - MC.CORRELATION;
+      var doy = MC.haabFromTotal(total).doy;
+      var back = MC.mod(doy - 1, 365);
+      var g = MC.jdnToGregorian(total - back + MC.CORRELATION);
+      return g;
+    }
+    var years = [1000, 1200, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2300];
+    var rows = years.map(function (y) {
+      var g = firstPopInYear(y);
+      return '<tr class="' + (y === 2000 ? 'highlight' : '') + '"><td>' + y + ' CE</td><td>' + MC.formatGregorian(g) + '</td></tr>';
+    });
+    document.getElementById('driftTable').innerHTML =
+      '<thead><tr><th>Gregorian year</th><th>Date of Haab\' 1 Pop</th></tr></thead><tbody>' + rows.join('') + '</tbody>';
+  })();
+
+  document.getElementById('hd').value = (R.greg.y > 0 ? String(R.greg.y).padStart(4, '0') : '') + '-' + String(R.greg.m).padStart(2, '0') + '-' + String(R.greg.d).padStart(2, '0');
+  document.getElementById('hdGo').addEventListener('click', function () {
+    var v = document.getElementById('hd').value; if (!v) return;
+    var p = v.split('-').map(Number);
+    var r = MC.readingFromGregorian(p[0], p[1], p[2]);
+    document.getElementById('hdOut').innerHTML = '<b>Result</b>' + MC.haabLabel(r.hb) +
+      ' · Haab\' day ' + r.hb.doy + ' of 365 · Tzolk\'in ' + r.tz.num + ' ' + r.tz.sign;
+  });
+
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>

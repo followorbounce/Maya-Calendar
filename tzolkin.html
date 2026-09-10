@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tzolk'in — the 260-Day Sacred Calendar — Ju'un K'in</title>
+<meta name="description" content="The Tzolk'in: 13 numbers and 20 day signs meshing into a 260-day count. Origin theories, the 20 trecenas, an interactive 260-day grid, and a sourced reference for every day sign.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/tzolkin.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tzolk'in — the 260-Day Sacred Calendar">
+<meta property="og:description" content="Origin theories, the 20 trecenas, an interactive 260-day grid, and a sourced reference for every day sign.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/tzolkin.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="tzolkin">
+
+<div id="site-header"></div>
+
+<main class="wrap">
+
+  <section class="hero-intro">
+    <div class="eyebrow">Tzolk'in · 13 × 20</div>
+    <h1 class="page-title">The 260-day sacred calendar</h1>
+    <p class="lede">Two independent gears — the numbers 1–13 and a fixed ring of 20 named days — turn together. A given number returns to a given day only after 260 steps (13 and 20 share no common factor). This count is attested across Mesoamerica for well over two millennia and is still kept today by K'iche', Ixil, Mam, Q'anjob'al and other daykeepers.</p>
+    <div class="callout" id="todayLine">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Why 260?</div>
+    <h2 class="title">Origin theories</h2>
+    <p class="lede">No source states why the count is 260 days. Several explanations are argued; they are not mutually exclusive, and none is proven.</p>
+    <div class="prose">
+      <ul>
+        <li><b>Human gestation.</b> ~260 days approximates the interval from a missed first menses to birth; midwife-daykeepers in living tradition make this link explicitly.</li>
+        <li><b>Zenith passage.</b> Near 14–15° N (the latitude of Copán and much of the southern lowlands) the interval between the sun's two annual zenith transits is close to 260 days on one side of the year.</li>
+        <li><b>Agricultural cycle.</b> 260 days is roughly the maize planting-to-harvest span in parts of the highlands.</li>
+        <li><b>Ritual arithmetic.</b> 13 (levels of the upper world / a sacred number) times 20 (a full count, and the number of fingers and toes — the vigesimal base).</li>
+        <li><b>Venus and eclipses.</b> 260 divides evenly into longer astronomical periods used in the codical tables (e.g. 2 × 260 = 520 ≈ 3 eclipse half-years).</li>
+      </ul>
+      <h3>Antiquity</h3>
+      <p>The earliest securely dated 260-count references come from Oaxaca (Monte Albán, San José Mogote Monument 3, ~600 BCE) — that is, from Zapotec rather than Maya contexts. The system was pan-Mesoamerican; the Maya inherited and elaborated it rather than inventing it.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Structure</div>
+    <h2 class="title">The 20 trecenas</h2>
+    <p class="lede">The 260-day round divides into twenty 13-day periods (<em>trecenas</em>, from Spanish <em>trece</em>). Each begins on number 1 and is named for its opening day sign. The current trecena is highlighted.</p>
+    <div class="tbl-scroll">
+      <table class="data-table" id="trecenaTable"></table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">The whole cycle</div>
+    <h2 class="title">260 days at a glance</h2>
+    <p class="lede">Each row is one of the 20 trecenas; each column is the number 1–13. Bold cells in the first column open a trecena. Tap any day to see when it next falls in the Gregorian year.</p>
+    <div class="tzolkin-grid" id="tzGrid"></div>
+    <div class="scale-note" id="tzGridNote" style="margin-top:10px">—</div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Your day</div>
+    <h2 class="title">Tzolk'in for any date</h2>
+    <div class="field-card" style="max-width:420px">
+      <label for="bd">Gregorian date</label>
+      <div class="field-row">
+        <input type="date" id="bd">
+        <button class="btn" id="bdGo">Read</button>
+      </div>
+      <div class="result-line" id="bdOut"><b>Result</b>—</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow">Symbol reference</div>
+    <h2 class="title">The twenty day signs</h2>
+    <p class="lede">Each entry is layered by evidentiary status. Toggle the filters to control which categories of claim are shown — <em>Modern interpretations</em> are hidden by default, per this reference's <a href="sources.html">editorial policy</a>. The current day sign is outlined.</p>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="sign-grid" id="signGrid"></div>
+    <div class="detail-panel" id="detailPanel" hidden></div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+
+  var SIGN_INFO = {
+    "Imix": { meaning: "Waterlily / the primordial sea", notes: [
+      { tag: 'primary', text: "Appears constantly as a Tzolk'in day-name glyph in Classic monumental Initial Series and Calendar Round dates across the lowlands." },
+      { tag: 'reconstruction', text: "Read phonetically as IMIX / IMIY by most epigraphers, linked iconographically to the waterlily monster and the surface of the primordial sea." },
+      { tag: 'speculative', text: "A connection to a specific 'earth-crocodile' cosmogonic narrative is argued by some scholars but not textually explicit in Classic sources." }],
+      modern: "In 20th-century Yucatec day-keeping traditions, Imix is often glossed as a day of nurturing and abundance." },
+    "Ik'": { meaning: "Wind / breath", notes: [
+      { tag: 'primary', text: "The IK' sign, a stylized T-shaped 'wind' glyph, is one of the most iconographically consistent day signs across regions and periods." },
+      { tag: 'reconstruction', text: "Widely read as IK', cognate with the word for wind/breath/spirit in Mayan languages; the T-shape recurs in architecture (wind-holes) and censer iconography." }],
+      modern: "Frequently associated in living Maya calendrics with breath, life-force, and communication." },
+    "Ak'bal": { meaning: "Night / darkness", notes: [
+      { tag: 'primary', text: "The sign shows a distinctive shaded/cross-hatched cartouche interpreted as darkness; frequent in Calendar Round dates on stelae." },
+      { tag: 'reconstruction', text: "Read AK'AB or AK'B'AL ('night, darkness') by most epigraphers, based on substitution patterns and phonetic complements." },
+      { tag: 'speculative', text: "Association with the interior of caves and the underworld is argued from iconographic context rather than stated directly." }],
+      modern: "Modern practitioners sometimes gloss it as a day for introspection tied to night and the unconscious." },
+    "K'an": { meaning: "Maize seed / yellow / ripeness", notes: [
+      { tag: 'primary', text: "The sign, resembling a perforated bead or kernel, occurs regularly as a day name and separately as the color/word K'AN ('yellow, precious')." },
+      { tag: 'reconstruction', text: "Read K'AN; scholars link the day sign to young maize and abundance based on its visual similarity to maize-kernel glyphs." }],
+      modern: "Often associated today with germination, new beginnings, and prosperity in popular calendar guides." },
+    "Chikchan": { meaning: "Celestial serpent", notes: [
+      { tag: 'primary', text: "Appears as a day-name glyph, typically with a scaled or reptilian infix." },
+      { tag: 'reconstruction', text: "Read CHIK-CHAN, connected to serpent imagery, though the exact underlying word and its full semantic range remain debated." },
+      { tag: 'speculative', text: "Ties to specific sky-serpent deities are argued by iconographers but not glyphically labeled 'Chikchan' in every case." }] },
+    "Kimi": { meaning: "Death", notes: [
+      { tag: 'primary', text: "The sign often shows a stylized skull or 'closed eye' motif; frequently paired in the corpus with death-god iconography." },
+      { tag: 'reconstruction', text: "Read CHAM / KIMI (regional variants) meaning 'death'; the Classic-period reading is debated between Cham and Kimi forms depending on language affiliation." }] },
+    "Manik'": { meaning: "Deer (grasping hand, per some readings)", notes: [
+      { tag: 'primary', text: "The glyph shows a hand-like form and is a common day sign in monumental Calendar Round dates." },
+      { tag: 'reconstruction', text: "Colonial Yucatec sources give MANIK'; some epigraphers propose the Classic reading may differ (e.g. connected to CHIJ, 'deer') — active discussion, not settled consensus." }],
+      modern: "Popular sources often render this simply as 'Deer' and associate it with the hunt." },
+    "Lamat": { meaning: "Venus / star", notes: [
+      { tag: 'primary', text: "The sign, sometimes shown with a four-part or 'star' motif, recurs both as a day name and within Venus-related iconography and codical tables." },
+      { tag: 'reconstruction', text: "Read LAMAT in colonial sources; the Venus association is supported by the star glyph's broader use for 'ek'/Venus, though the day-sign label itself is colonial projected onto Classic forms." }] },
+    "Muluk": { meaning: "Water / jade (proposed)", notes: [
+      { tag: 'primary', text: "Appears regularly as a day-name sign, sometimes with a jade-bead or water motif." },
+      { tag: 'reconstruction', text: "Read MULUK per colonial sources; the underlying Classic reading and semantic range are less firmly settled than for better-attested signs." },
+      { tag: 'speculative', text: "Specific associations with rain deities are argued from context rather than direct textual statement." }] },
+    "Ok": { meaning: "Dog", notes: [
+      { tag: 'primary', text: "A day-name sign occurring throughout the monumental corpus." },
+      { tag: 'colonial', text: "Colonial Yucatec sources (Landa; the Books of Chilam Balam) give OK as 'dog' and connect it to the underworld-guide role dogs play in Mesoamerican belief generally." },
+      { tag: 'speculative', text: "Direct Classic-period confirmation of a psychopomp role specifically tied to this day sign (versus dog imagery generally) is limited." }] },
+    "Chuwen": { meaning: "Howler monkey / artisan", notes: [
+      { tag: 'primary', text: "Day-name sign; the word CHUWEN also functions in Classic texts as a term connected to craftsmanship and scribal/artisanal roles." },
+      { tag: 'reconstruction', text: "Epigraphers connect this to howler-monkey iconography, which elsewhere (e.g. on painted ceramics) is closely tied to scribes and artists." }] },
+    "Eb'": { meaning: "Grass / point (disputed etymology)", notes: [
+      { tag: 'primary', text: "Regular day-name sign in the corpus." },
+      { tag: 'colonial', text: "Colonial Yucatec sources give EB'; the meaning of the root is debated and not fully resolved." }] },
+    "Ben": { meaning: "Reed / maize sprout (proposed)", notes: [
+      { tag: 'primary', text: "Regular day-name sign, often a simple vertical element." },
+      { tag: 'colonial', text: "Colonial sources record BEN; Classic-period phonetic substitutions for this sign are comparatively sparse, so the underlying Classic word is less securely established." }] },
+    "Ix": { meaning: "Jaguar", notes: [
+      { tag: 'primary', text: "Day-name sign, often bearing a jaguar-pelt or spotted motif; also appears as a common element (IX/IXIK) in other contexts." },
+      { tag: 'reconstruction', text: "Read IX or HIX by different epigraphers depending on regional orthography; jaguar associations are well supported by both text and iconography." }] },
+    "Men": { meaning: "Eagle / (moon, aged one)", notes: [
+      { tag: 'primary', text: "Day-name sign, sometimes with an avian or aged-face motif." },
+      { tag: 'colonial', text: "Colonial sources associate this day with old age and, in some material, with the moon goddess; Classic-period evidence for these is comparatively indirect." }] },
+    "Kib'": { meaning: "Wax / offering term (contested)", notes: [
+      { tag: 'primary', text: "Day-name sign, occurring regularly in Calendar Round dates." },
+      { tag: 'colonial', text: "Colonial sources record KIB'; associations with wax, wasps, or offerings vary across sources and are not uniformly agreed." }] },
+    "Kaban": { meaning: "Earth / earthquake (proposed)", notes: [
+      { tag: 'primary', text: "Day-name sign, sometimes with a spiral or 'cross-in-square' earth motif seen in other earth-related glyphs." },
+      { tag: 'reconstruction', text: "Connected by epigraphers to CHAB'/KAB, terms bearing on 'earth', from shared iconographic elements with other earth-referencing signs." }] },
+    "Etz'nab'": { meaning: "Flint / obsidian blade", notes: [
+      { tag: 'primary', text: "Day-name sign, typically depicted with a flint/blade outline consistent with flint-knife glyphs used for ritual implements." },
+      { tag: 'colonial', text: "Colonial sources record the name and its association with flint knives, consistent with the visual form." }] },
+    "Kawak": { meaning: "Storm / rain", notes: [
+      { tag: 'primary', text: "Day-name sign, often with a cross-hatched or 'stone' texture also used in 'witz' (mountain) and storm iconography." },
+      { tag: 'reconstruction', text: "Associations with storms and the rain deity Chaak are broadly supported by shared iconographic conventions, though the precise etymology is debated." }] },
+    "Ajaw": { meaning: "Lord / ruler", notes: [
+      { tag: 'primary', text: "One of the best-attested signs in the whole script: AJAW is both a day name and the primary Classic royal title, appearing thousands of times." },
+      { tag: 'reconstruction', text: "Securely read AJAW ('lord, ruler'); Period Ending dates are frequently anchored to days named Ajaw, giving this sign outsized importance in the Long Count." }] }
+  };
+  var FILTERS = [
+    { key: 'primary', label: 'Primary inscription' }, { key: 'colonial', label: 'Colonial source' },
+    { key: 'reconstruction', label: 'Scholarly reconstruction' }, { key: 'speculative', label: 'Speculative' },
+    { key: 'modern', label: 'Modern interpretation', modern: true, off: true }
+  ];
+  var active = new Set(FILTERS.filter(function (f) { return !f.off; }).map(function (f) { return f.key; }));
+
+  function glyph(name, big) {
+    var hash = [].reduce.call(name, function (a, c) { return a + c.charCodeAt(0); }, 0);
+    var hue = hash % 360;
+    return '<svg viewBox="0 0 40 40" width="100%" height="100%" aria-hidden="true">' +
+      '<rect x="2" y="2" width="36" height="36" rx="9" fill="hsl(' + hue + ',26%,' + (big ? 34 : 32) + '%)" stroke="var(--ink)" stroke-width="1.4"/>' +
+      '<circle cx="' + (10 + hash % 18) + '" cy="' + (12 + hash % 12) + '" r="3.2" fill="hsl(' + (hue + 40) % 360 + ',38%,72%)"/>' +
+      '<path d="M8 27 Q20 ' + (16 + hash % 10) + ' 32 27" stroke="hsl(' + (hue + 180) % 360 + ',28%,82%)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+  }
+
+  function todayReading() {
+    var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+    var t = MC.todayInZone(tz);
+    return MC.readingFromGregorian(t.y, t.m, t.d);
+  }
+  var R = todayReading();
+
+  document.getElementById('todayLine').innerHTML =
+    "Today is <b>" + R.tz.num + " " + R.tz.sign + "</b> — Tzolk'in day " + R.tz.ordinal +
+    " of 260, in trecena " + R.trecena.number + " (which opened on 1 " + R.trecena.startSign + ").";
+
+  /* trecena table */
+  (function () {
+    var rows = [];
+    for (var k = 0; k < 20; k++) {
+      var startOrd = k * 13 + 1;
+      var sign = MC.DAY_SIGNS[MC.mod(startOrd - 1, 20)];
+      var endSign = MC.DAY_SIGNS[MC.mod(startOrd + 11, 20)];
+      var cur = (k + 1) === R.trecena.number;
+      rows.push('<tr class="' + (cur ? 'current' : '') + '"><td>' + (k + 1) + '</td><td class="name">1 ' + sign +
+        '</td><td>days ' + startOrd + '–' + (startOrd + 12) + '</td><td class="txt">opens 1 ' + sign + ', closes 13 ' + endSign + '</td></tr>');
+    }
+    document.getElementById('trecenaTable').innerHTML =
+      '<thead><tr><th>#</th><th>Trecena</th><th>Cycle days</th><th>Span</th></tr></thead><tbody>' + rows.join('') + '</tbody>';
+  })();
+
+  /* 260-day grid */
+  (function () {
+    var grid = document.getElementById('tzGrid'), cells = [];
+    for (var o = 1; o <= 260; o++) {
+      var num = MC.mod(o - 1, 13) + 1;
+      var sign = MC.DAY_SIGNS[MC.mod(o - 1, 20)];
+      var cls = 'kin-cell';
+      if (num === 1) cls += ' trecena-start';
+      if (o === R.tz.ordinal) cls += ' current';
+      cells.push('<button class="' + cls + '" data-o="' + o + '" title="' + num + ' ' + sign + ' (day ' + o + ')">' + num + '</button>');
+    }
+    grid.innerHTML = cells.join('');
+    grid.addEventListener('click', function (e) {
+      var b = e.target.closest('.kin-cell'); if (!b) return;
+      var o = +b.dataset.o;
+      var num = MC.mod(o - 1, 13) + 1, sign = MC.DAY_SIGNS[MC.mod(o - 1, 20)];
+      // next Gregorian occurrence from today
+      var delta = MC.mod(o - R.tz.ordinal, 260);
+      var g = MC.jdnToGregorian(R.jdn + delta);
+      document.getElementById('tzGridNote').innerHTML =
+        '<b>' + num + ' ' + sign + '</b> — cycle day ' + o + '. Next falls on ' + MC.formatGregorian(g) +
+        (delta === 0 ? ' (today)' : ' (' + delta + ' days from today)') + '.';
+    });
+  })();
+
+  /* birth lookup */
+  document.getElementById('bd').value = (R.greg.y > 0 ? String(R.greg.y).padStart(4, '0') : '') + '-' + String(R.greg.m).padStart(2, '0') + '-' + String(R.greg.d).padStart(2, '0');
+  document.getElementById('bdGo').addEventListener('click', function () {
+    var v = document.getElementById('bd').value; if (!v) return;
+    var p = v.split('-').map(Number);
+    var r = MC.readingFromGregorian(p[0], p[1], p[2]);
+    document.getElementById('bdOut').innerHTML = '<b>Result</b>' + r.tz.num + ' ' + r.tz.sign +
+      ' · Tzolk\'in day ' + r.tz.ordinal + ' of 260 · trecena ' + r.trecena.number + ' (1 ' + r.trecena.startSign + ') · Haab\' ' + MC.haabLabel(r.hb);
+  });
+
+  /* symbol reference */
+  var openSign = null;
+  (function () {
+    var row = document.getElementById('filterRow');
+    row.innerHTML = FILTERS.map(function (f) {
+      return '<button class="filter-chip ' + (f.modern ? 'modern ' : '') + (active.has(f.key) ? 'on' : '') + '" data-k="' + f.key + '">' + f.label + '</button>';
+    }).join('');
+    row.addEventListener('click', function (e) {
+      var b = e.target.closest('.filter-chip'); if (!b) return;
+      var k = b.dataset.k;
+      if (active.has(k)) active.delete(k); else active.add(k);
+      b.classList.toggle('on');
+      if (openSign) showSign(openSign);
+    });
+
+    var grid = document.getElementById('signGrid');
+    grid.innerHTML = MC.DAY_SIGNS.map(function (name, i) {
+      return '<button class="daychip' + (name === R.tz.sign ? ' current' : '') + '" data-name="' + name + '">' +
+        '<span class="g">' + glyph(name, false) + '</span><span class="n">' + name + '</span><span class="idx">' + (i + 1) + '/20</span></button>';
+    }).join('');
+    grid.addEventListener('click', function (e) {
+      var b = e.target.closest('.daychip'); if (!b) return; showSign(b.dataset.name);
+    });
+  })();
+
+  function showSign(name) {
+    openSign = name;
+    var info = SIGN_INFO[name], panel = document.getElementById('detailPanel');
+    if (!info) { panel.hidden = true; return; }
+    var notes = info.notes.filter(function (n) { return active.has(n.tag); }).map(function (n) {
+      return '<div class="note-row"><span class="tag ' + n.tag + '">' + FILTERS.find(function (f) { return f.key === n.tag; }).label + '</span><p>' + n.text + '</p></div>';
+    }).join('');
+    var mod = (info.modern && active.has('modern'))
+      ? '<div class="note-row"><span class="tag modern">Modern interpretation</span><p>' + info.modern + '</p></div>' : '';
+    panel.innerHTML = '<div class="detail-head"><span class="g-big">' + glyph(name, true) + '</span>' +
+      '<div><h3>' + name + '</h3><div class="m">' + info.meaning + '</div></div></div>' +
+      (notes || '<p style="color:var(--muted-soft);font-size:13px">No entries match the current filter selection.</p>') + mod;
+    panel.hidden = false;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  var q = MC.parseQuery();
+  if (q.sign && SIGN_INFO[q.sign]) showSign(q.sign);
+
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>

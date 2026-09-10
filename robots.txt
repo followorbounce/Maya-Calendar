@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://followorbounce.github.io/Maya-Calendar/sitemap.xml

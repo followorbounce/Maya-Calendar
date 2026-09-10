@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dreamspell — Galactic Signature Calculator — Ju'un K'in</title>
+<meta name="description" content="A full Dreamspell (13:20) Galactic Signature calculator — solar seal, galactic tone, colour, wavespell and the five-part Oracle — with a note on how the modern Dreamspell count differs from the traditional Tzolk'in.">
+<link rel="canonical" href="https://followorbounce.github.io/Maya-Calendar/dreamspell.html">
+<meta name="theme-color" content="#F2F1EC">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dreamspell — Galactic Signature Calculator">
+<meta property="og:description" content="Solar seal, galactic tone, wavespell and Oracle — plus how the Dreamspell count differs from the traditional Tzolk'in.">
+<meta property="og:url" content="https://followorbounce.github.io/Maya-Calendar/dreamspell.html">
+<meta property="og:site_name" content="Ju'un K'in">
+<meta name="twitter:card" content="summary">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Spectral+SC:wght@500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/calendar.js"></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="dreamspell">
+
+<div id="site-header"></div>
+
+<main class="wrap dream-scope">
+
+  <section class="hero-intro">
+    <div class="eyebrow" data-dream-accent>Dreamspell · 13 : 20</div>
+    <h1 class="page-title">Galactic Signature calculator</h1>
+    <div class="caveat-banner">
+      <span class="badge">Modern system</span>
+      <div>The <b>Dreamspell</b> (also "13-Moon" / "Galactic Maya") was created by José &amp; Lloydine Argüelles in 1987–1990. It is a contemporary system, not the Classic Maya calendar, and its 260-day count is not the one kept by Maya daykeeping communities — it holds its count across 29 February, so it drifts from the traditional <a href="tzolkin.html">Tzolk'in</a>. See <a href="#compare">how they differ</a> below.</div>
+    </div>
+    <p class="lede">Enter a date to get its Galactic Signature — colour, galactic tone, and solar seal — plus the wavespell it sits in and the five-kin Oracle.</p>
+    <div class="field-card" style="max-width:420px">
+      <label for="dsDate">Gregorian date</label>
+      <div class="field-row"><input type="date" id="dsDate"><button class="btn" id="dsGo">Calculate</button></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow" data-dream-accent>Your signature</div>
+    <div class="signature-card" id="sigCard">—</div>
+    <div class="oracle-grid" id="oracleGrid"></div>
+    <div class="scale-note" id="wsNote" style="margin-top:12px">—</div>
+  </section>
+
+  <section class="section" id="compare">
+    <div class="eyebrow" data-dream-accent>Side by side</div>
+    <h2 class="title">Dreamspell vs. the traditional Tzolk'in</h2>
+    <p class="lede">For the date above:</p>
+    <div class="tbl-scroll">
+      <table class="data-table compare-table" id="cmpTable"></table>
+    </div>
+    <div class="prose" style="margin-top:14px">
+      <ul>
+        <li><b>The count.</b> The traditional Tzolk'in is a continuous 260-day cycle carried unbroken by daykeepers. The Dreamspell fixes Kin values to Gregorian dates and gives 29 February no Kin, so the two counts sit a fixed number of days apart and that gap is baked in by the anchor choice.</li>
+        <li><b>The names.</b> Dreamspell renames the 20 signs to English "solar seals" (Dragon, Wind, Night, Seed…) and adds 13 "galactic tones," four colour families, the wavespell and the Oracle — none of which appear in Maya sources.</li>
+        <li><b>The year.</b> The Dreamspell year is 13 months of 28 days plus one "Day Out of Time" (25 July) — unrelated to the 365-day <a href="haab.html">Haab'</a>.</li>
+        <li><b>Reception.</b> Maya organizations and daykeepers have publicly distinguished their calendar from the Dreamspell.</li>
+      </ul>
+      <p class="mono" style="display:block;padding:8px 10px">Anchor used here: 26 July 1987 = Kin 34 (Blue Galactic Wizard), the standard kit value. Other correlations exist — verify against your preferred source.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow" data-dream-accent>Reference</div>
+    <h2 class="title">The 20 solar seals</h2>
+    <div class="tbl-scroll"><table class="data-table" id="sealTable"></table></div>
+  </section>
+
+  <section class="section">
+    <div class="eyebrow" data-dream-accent>Reference</div>
+    <h2 class="title">The 13 galactic tones</h2>
+    <div class="tone-scale" id="toneScale" style="margin-bottom:14px"></div>
+    <div class="tbl-scroll"><table class="data-table" id="toneTable"></table></div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script>
+(function () {
+  var MC = window.MC;
+  var tz; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) { tz = 'UTC'; }
+  var td = MC.todayInZone(tz);
+
+  document.getElementById('dsDate').value = String(td.y).padStart(4, '0') + '-' + String(td.m).padStart(2, '0') + '-' + String(td.d).padStart(2, '0');
+
+  function render(y, m, d) {
+    var s = MC.dreamspell(y, m, d);
+    document.getElementById('sigCard').innerHTML =
+      '<div class="signature-kin">Kin ' + s.kin + ' — ' + s.signature + '</div>' +
+      '<p style="margin-top:8px;font-size:13px;color:var(--muted)">' +
+      s.color + ' · Tone ' + s.tone + ' ' + s.toneName + ' (' + s.toneAction + ') · Seal ' + s.seal + ' ' + s.sealName +
+      ' &nbsp;·&nbsp; traditional day sign: ' + s.sealMaya + '</p>';
+
+    var o = s.oracle;
+    function cell(k, label) {
+      if (!k) return '';
+      return '<div class="oracle-cell"><div class="ok">' + label + '</div>Kin ' + k.kin + '<br>' + k.color + ' ' + k.toneName + '<br>' + k.sealName + '</div>';
+    }
+    document.getElementById('oracleGrid').innerHTML =
+      cell(o.guide, 'Guide') + cell(o.analog, 'Analog') + cell(o.destiny, 'Destiny') +
+      cell(o.antipode, 'Antipode') + cell(o.occult, 'Occult');
+
+    document.getElementById('wsNote').innerHTML =
+      'Wavespell: the 13-day run beginning at Kin ' + s.wavespell.startKin + ' — the <b>' + s.wavespell.name + '</b> wavespell. This date is day ' + s.tone + ' of it.';
+
+    var cmp = MC.dreamspellVsTraditional(y, m, d);
+    var trad = MC.readingFromGregorian(y, m, d);
+    document.getElementById('cmpTable').innerHTML =
+      '<thead><tr><th></th><th>Traditional Tzolk\'in</th><th>Dreamspell</th></tr></thead><tbody>' +
+      '<tr><td class="name">Day</td><td>' + trad.tz.num + ' ' + trad.tz.sign + '</td><td class="diff">' + s.tone + ' ' + s.sealMaya + ' → ' + s.toneName + ' ' + s.sealName.replace(/^\w+ /, '') + '</td></tr>' +
+      '<tr><td class="name">Position in 260</td><td>day ' + cmp.traditionalOrdinal + '</td><td class="diff">Kin ' + cmp.dreamspellKin + '</td></tr>' +
+      '<tr><td class="name">Offset</td><td colspan="2" class="diff">the two counts are ' + cmp.offset + ' days apart for this date</td></tr>' +
+      '</tbody>';
+  }
+
+  document.getElementById('dsGo').addEventListener('click', function () {
+    var p = document.getElementById('dsDate').value.split('-').map(Number);
+    if (p.length === 3) render(p[0], p[1], p[2]);
+  });
+
+  /* seal glossary */
+  document.getElementById('sealTable').innerHTML =
+    '<thead><tr><th>#</th><th>Solar seal</th><th>Colour</th><th>Traditional sign</th></tr></thead><tbody>' +
+    MC.DS_SEALS.map(function (name, i) {
+      return '<tr><td>' + (i + 1) + '</td><td class="name">' + name + '</td><td>' + MC.DS_COLORS[i % 4] + '</td><td>' + MC.DS_SEAL_MAYA[i] + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  /* tone scale + table */
+  document.getElementById('toneScale').innerHTML = MC.DS_TONES.map(function (t, i) {
+    return '<span class="tone-dot" title="' + t + '">' + (i + 1) + '</span>';
+  }).join('');
+  document.getElementById('toneTable').innerHTML =
+    '<thead><tr><th>#</th><th>Galactic tone</th><th>Action / essence</th></tr></thead><tbody>' +
+    MC.DS_TONES.map(function (t, i) {
+      return '<tr><td>' + (i + 1) + '</td><td class="name">' + t + '</td><td class="txt">' + MC.DS_TONE_ACTION[i] + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  render(td.y, td.m, td.d);
+  window.dispatchEvent(new Event('mc:rendered'));
+})();
+</script>
+</body>
+</html>
