@@ -1,5 +1,5 @@
 /* Ju'un K'in — offline cache. Bump CACHE on any asset change. */
-var CACHE = "juunkin-v1";
+var CACHE = "juunkin-v2";
 var ASSETS = [
   "./", "index.html", "tzolkin.html", "haab.html", "calendar-round.html",
   "long-count.html", "cosmology.html", "dreamspell.html", "sources.html",

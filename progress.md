@@ -13,6 +13,7 @@
 
 - 2026-09-19 — Added a Cloudflare Web Analytics beacon (cross-repo rollout across every deployed followorbounce/client site). See [[cloudflare-analytics-setup]] in the assistant's memory for the account/token map.
 
-## Next steps
+## Next steps- 2026-10-02 — Science review: engine verified (13.0.0.0.0 4 Ajaw 8 Kumk'u = JDN 584283 = 11 Aug 3114 BCE; 2012-12-21 = 13.0.0.0.0 4 Ajaw 3 K'ank'in; Dreamspell 2012-12-21 = Kin 207; LC/JDN round-trip ±2M days clean). Fixed: Dreamspell anchor label "Kin 34 (Blue Galactic Wizard)" → White (seal 14 = White Wizard) in `dreamspell.html` + comment in `assets/calendar.js`; bumped `sw.js` cache to `juunkin-v2`. Open question: 819-day stations are conventionally anchored at 12.19.19.17.17 1 Kaban 5 Kumk'u (era base − 3), not the era base — see `sources.html` caveat.
+
 - No open TODOs found in-repo (README's "Scope / caveats" section already documents known reconstruction caveats — not action items).
 - Confirm `sources.html` bibliography stays current if calendar engine logic (`assets/calendar.js`) is ever touched.

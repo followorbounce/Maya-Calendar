@@ -225,7 +225,7 @@
      Maya communities. Its 260-count skips 29 February, so it
      drifts from the living Tzolk'in kept by daykeepers.
 
-     Anchored: 26 July 1987 = Kin 34 (Blue Galactic Wizard),
+     Anchored: 26 July 1987 = Kin 34 (White Galactic Wizard),
      the Harmonic Convergence kin used by the standard kit.
      ============================================================ */
   var DS_SEALS = ["Red Dragon", "White Wind", "Blue Night", "Yellow Seed", "Red Serpent",
