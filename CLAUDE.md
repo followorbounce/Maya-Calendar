@@ -25,3 +25,7 @@ GitHub Pages from `main`, served at `https://followorbounce.github.io/Maya-Calen
 
 ## Analytics
 Cloudflare Web Analytics beacon added 2026-09-19, shares the `followorbounce.github.io` Web Analytics site (see `[[cloudflare-analytics-setup]]` in memory).
+
+
+## Share pictures (og:image)
+Added 2026-10-28. Every public page has a 1200×630 share picture at `og/<canonical path>.jpg` (`og/index.jpg` for the front page) and the tags `og:image` (+ width, height, alt), `twitter:card` = `summary_large_image` and `twitter:image`. the tags sit directly in each page's head, placed after the page's other og:/twitter: tags. The pictures are drawn by `engine/og_cards.py` in the followorbounce.github.io repo (one card template, this site's own palette and type, `og/manifest.json` = a hash per card so unchanged cards are skipped). After adding or renaming a page, or changing a title or description, run `python3 engine/og_cards.py Maya-Calendar` from that repo; it renders new cards, adds missing tags and deletes cards of pages that went away. `--check` lists pages without tags.
